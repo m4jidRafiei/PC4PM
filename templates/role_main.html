@@ -1,0 +1,199 @@
+{% extends 'base.html' %}
+
+{% block content  %}
+
+      {% if message %}
+        <script>
+            alert({{message}})
+        </script>
+      {% endif %}
+      <div class="container-fluid">
+        <h3 class="mt-4" style="color:#00529F;">Privacy-Aware Role Mining</h3>
+
+        <form  name="apply_role_mining" action="role_main" method = "POST">
+
+            <div class="row">
+          <div class=" col-sm-6 col-md-7 col-lg-8">
+              {% if log_name != ':notset:' %}
+                <p style="color:green;"> {{log_name}} is used as input.</p>
+              {% else %}
+                <p style="color:red;"> You have not set any event log as input. Use "Event Data" tab to set an event log as input!</p>
+              {% endif %}
+
+            {% csrf_token %}
+            <!--<p>Event log: <input type = "file" value="fileupload" name = "Event Log" /></p>-->
+            <div class="form-group">
+                <span style="white-space: nowrap">
+                <label for="RoleMining_Tech" >Choose the thechnique:</label>
+                <select id="RoleMining_Tech" name="RoleMining_Tech" class="form-control col-sm-6">
+                    <option name='fixed_value' id="Fixed_Value_Option" value='fixed_value' >Fixed Value</option>
+                    <option name='selective' id="Selective_Option" value='selective' >Selective</option>
+                    <option name='frequency_based' id="Frequency_Based_Option" value='frequency_based' >Frequency Based</option>
+                </select>
+                </span>
+            </div>
+
+            <div id="fixed_value" class = "group">
+                <div class="form-group row">
+                    <label for="fixedValue" class="col-sm-2 col-form-label">Fixed Value</label>
+                    <div  class="col-sm-4" style="margin-left:15px;">
+                      <input  type="text" class="form-control" id="fixedValue" name="fixedValue" placeholder="Fixed value" value="{{values.fixedValue}}">
+                    </div>
+                </div>
+            </div>
+
+            <div id="selective" class = "group">
+                <div class="form-check">
+                  <input class="form-check-input" type="radio" name="LowerUpper" id="lower_upper" value="LowerUpper" checked>
+                  <label class="form-check-label" for="lower_upper">
+                    Lower and Upper Bound
+                  </label>
+                </div>
+                <div class="form-check">
+                  <input class="form-check-input" type="radio" name="LowerUpper" id="lower" value="lower" >
+                  <label class="form-check-label" for="lower">
+                    Lower Bound
+                  </label>
+                </div>
+                <div class="form-check">
+                  <input class="form-check-input" type="radio" name="LowerUpper" id="upper" value="upper" >
+                  <label class="form-check-label" for="lower_upper">
+                    Upper Bound
+                  </label>
+                </div>
+                 {% if values.LowerUpper %}
+                     <script>
+                        $( "#{{values.LowerUpper}}").prop('checked', true);
+                    </script>
+                {% endif %}
+            </div>
+
+            <div id="frequency_based" class = "group">
+                <div class="form-group row">
+                    <label for="fixedValueFreq" class="col-sm-2 col-form-label">Fixed Value</label>
+                    <div class="col-sm-4" style="margin-left:15px;">
+                      <input type="text" class="form-control" id="fixedValueFreq" name = "fixedValueFreq" placeholder="Fixed value to be added" value="{{values.fixedValueFreq}}">
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-check form-check-inline">
+              <input class="form-check-input" type="checkbox" id="resourceAware" value="resourceAware" name="resourceAware">
+              <label class="form-check-label" for="resourceAware">Resource-Aware</label>
+                {% if values.resourceAware %}
+                     <script>
+                        $( "#{{values.resourceAware}}").prop('checked', true);
+                    </script>
+                {% endif %}
+            </div>
+            <div class="form-check form-check-inline">
+              <input class="form-check-input" type="checkbox" id="hashedAct" value="hashedAct" name="hashedAct">
+              <label class="form-check-label" for="hashedAct">Hashed Activities</label>
+                 {% if values.hashedAct %}
+                     <script>
+                        $( "#{{values.hashedAct}}").prop('checked', true);
+                    </script>
+                {% endif %}
+            </div>
+
+
+            <div class="pt-4">
+            <button type="submit" class="btn btn-primary mb-2" id ='applyButton' name="applyButton"> Apply </button>
+            </div>
+
+        </div>
+        </div>
+        <br>
+         <div class="row">
+          <div class=" col-sm-6 col-md-7 col-lg-8">
+              <h5> Outputs </h5>
+
+                  <select name="output_list" class="custom-select" size="4">
+                            {% for output in outputs %}
+                                <option value="{{output}}">{{output}}</option>
+                            {% endfor %}
+                  </select>
+
+
+                  <input style="margin-top: 10px;" data-toggle="tooltip" data-placement="top" title="Add to the event logs" type = "submit" class="btn btn-success" value = "Add" name= "addButton" id ='addButton' />
+                  <input style="margin-top: 10px;" type = "submit" class="btn btn-danger" value = "Delete" name= "deleteButton" id ='deleteButton'/>
+                  <input style="float: right; margin-top: 10px;" type = "submit" class="btn btn-info" value = "Download" name= "downloadButton" id ='downloadButton'/>
+
+
+           </div>
+
+             <div class="spinner-grow text-primary" style="display:none" role="status">
+                        <span class="sr-only">Loading...</span>
+             </div>
+          </div>
+
+
+             {% if  values.RoleMining_Tech %}
+                <script>
+                    $('.group').hide();
+                    $('#{{values.RoleMining_Tech}}').show();
+                    $('#RoleMining_Tech').val('{{values.RoleMining_Tech}}');
+
+                     $('#RoleMining_Tech').change(function () {
+                        $('.group').hide();
+                        $('#'+$(this).val()).show();
+                      })
+
+                </script>
+
+            {% else %}
+
+                <script>
+                    $(document).ready(function () {
+                      $('.group').hide();
+                      $('#fixed_value').show();
+
+                       $('#RoleMining_Tech').change(function () {
+                        $('.group').hide();
+                        $('#'+$(this).val()).show();
+                      })
+                    });
+                </script>
+
+            {% endif %}
+
+            {% if values.load %}
+                <script>
+                    $(".spinner-grow").show();
+                </script>
+            {% endif %}
+
+        </form>
+
+
+
+      </div>
+
+{% endblock %}
+
+{% block script %}
+
+  <script>
+
+  $(document).ready(function(){
+      $('[data-toggle="tooltip"]').tooltip();
+    });
+
+    $( "#applyButton" ).click(function() {
+      var logname = "{{log_name}}";
+      if ( logname == ":notset:")
+      {
+        alert( "Consider the RED messages in the screen!" );
+      }
+      $(".spinner-grow").show();
+    });
+
+   <!--function LoadELResult() {-->
+    <!--document.getElementById('ELResult').style.display = "block";-->
+    <!--}-->
+   <!--function LoadELResultimg() {-->
+    <!--document.getElementById('ELResultimg').style.display = "block";-->
+    <!--}-->
+  </script>
+
+{% endblock %}

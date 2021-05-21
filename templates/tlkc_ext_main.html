@@ -1,0 +1,333 @@
+{% extends 'base.html' %}
+
+{% block content  %}
+
+      <div class="container-fluid">
+        <h3 class="mt-4" style="color:#00529F;">TLKC-Privacy Extended Version</h3>
+
+        <form  name="apply_tlkc" action="tlkc_ext_main" method = "POST">
+
+         <div class="row">
+          <div class=" col-sm-6 col-md-7 col-lg-8">
+              {% if log_name != ':notset:' %}
+                <p style="color:green;"> {{log_name}} is used as input.</p>
+              {% else %}
+                <p style="color:red;"> You have not set any event log as input. Use "Event Data" tab to set an event log as input!</p>
+              {% endif %}
+
+              {% if message %}
+                 <p style="color:red;"> {{message}} </p>
+              {% endif %}
+
+            {% csrf_token %}
+            <!--<p>Event log: <input type = "file" value="fileupload" name = "Event Log" /></p>-->
+
+
+             <div class="form-group row">
+                    <label for="bk_type" class="col-md-5 col-form-label">Background Knowledge Type</label>
+                    <div class="col-sm-3">
+                       <select class="form-control" name="bk_type" id="bk_type">
+                           <option>set</option>
+                           <option>multiset</option>
+                           <option>sequence</option>
+                           <option>relative</option>
+                      </select>
+                    </div>
+            </div>
+
+            <div class="form-group row">
+                    <label for="bk_type" class="col-md-5 col-form-label">Background Knowledge Attribute</label>
+                    <div class="col-sm-3">
+                       <select class="form-control" name="bk_att" id="bk_att">
+                           <option>Activity</option>
+                           <option>Resource</option>
+                           <option>Activity & Resource</option>
+                      </select>
+                    </div>
+            </div>
+
+
+            <div class="form-group row">
+              <p class="col-md-8 col-form-label" style="display:block; color:orange;" id="perspective"> Corresponding perspective is control-flow & case  </p>
+            </div>
+
+            <div class="form-group row">
+                    <label for="time_accuracy" class="col-md-5 col-form-label">Time Accuracy (T)</label>
+                    <div class="col-sm-3">
+                       <select class="form-control" name="time_accuracy" id="time_accuracy">
+                           <option>seconds</option>
+                           <option>minutes</option>
+                           <option>hours</option>
+                           <option>days</option>
+                      </select>
+                    </div>
+            </div>
+
+
+            <div class="form-group row">
+                    <label for="bk_power" class="col-sm-5 col-form-label">Background Knowledge Power (L)</label>
+                    <div class="col-sm-3">
+                      <input type="text" class="form-control" id="bk_power" name="bk_power" placeholder="BK Power Value" value="{{values.bk_power}}">
+                    </div>
+            </div>
+
+
+
+            <div class="form-group row">
+                    <label for="k_anonymity" class="col-sm-5 col-form-label">Anonymity Group Size (K)</label>
+                    <div class="col-sm-3">
+                      <input type="text" class="form-control" id="k_anonymity" name="k_anonymity" placeholder="K Value" value="{{values.k_anonymity}}">
+                    </div>
+            </div>
+
+            <div class="form-group row">
+                    <label for="confidence_bound" class="col-sm-5 col-form-label">Confidence Bounding (C)</label>
+                    <div class="col-sm-3">
+                      <input type="text" class="form-control" id="confidence_bound" name="confidence_bound" placeholder="Confidence Value" value="{{values.confidence_bound}}">
+                    </div>
+            </div>
+
+            <div class="form-group row">
+                    <label for="alpha" class="col-sm-5 col-form-label">Privacy Gain Coefficient (&alpha;)</label>
+                    <div class="col-sm-3">
+                      <input type="text" class="form-control" id="alpha" name="alpha" placeholder="Privacy Gain Coefficient" value="{{values.alpha}}">
+                    </div>
+            </div>
+
+            <div class="form-group row">
+                    <label for="beta" class="col-sm-5 col-form-label">Utility Loss Coefficient (&beta;)</label>
+                    <div class="col-sm-3">
+                      <input type="text" class="form-control" id="beta" name="beta" placeholder="Utility Loss Coefficient" value="{{values.beta}}">
+                    </div>
+            </div>
+
+          <!--<div class="form-group row">-->
+            <!--<label class="col-sm-4 col-form-label">Sensitive Attributes</label>-->
+              <!--<div class="dropdown_sensitive col-sm-4">-->
+                  <!--<button style="float:right;" type="button" id="sensitive_att" class="btn btn-warning dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">-->
+                    <!--Add Sensitive Attribute-->
+                  <!--</button>-->
+                  <!--<div class="dropdown-menu">-->
+                      <!--<a class="dropdown-item" href="#">Remove All</a>-->
+                      <!--<div class="dropdown-divider"></div>-->
+                      <!--{% for sens in sensitvie_get %}-->
+                            <!--{% if sens != "@@case_index" and sens != "@@event_index"%}-->
+                            <!--<a class="dropdown-item" id="{{sens}}" href="#">{{sens}}</a>-->
+                            <!--{% endif %}-->
+                      <!--{% endfor %}-->
+                  <!--</div>-->
+              <!--</div>-->
+          <!--</div>-->
+          <div class="row">
+              <div class="col-sm-10 col-md-10 col-lg-12">
+            <div class="form-group row">
+                <label for="sens_att_list" class="col-sm-10 col-form-label">Select Sensitive Attributes (left:categorical, right:numerical):</label>
+            </div>
+
+                    <select id="sens_att_list" name="sens_att_list" class="custom-select col-md-4" size="4" multiple>
+                         {% for sens in sensitvie %}
+                            {% if sens != "@@case_index" and sens != "@@event_index" %}
+                              <option value="{{sens}}">{{sens}}</option>
+                            {% endif %}
+                        {% endfor %}
+                    </select>
+
+                   <select id="sens_att_list_cont" name="sens_att_list_cont" class="custom-select col-md-4" size="4" multiple>
+                         {% for sens in sensitvie %}
+                            {% if sens != "@@case_index" and sens != "@@event_index" %}
+                              <option value="{{sens}}">{{sens}}</option>
+                            {% endif %}
+                        {% endfor %}
+                    </select>
+
+
+          </div>
+          </div>
+
+            <div class="pt-4">
+            <button type="submit" class="btn btn-primary mb-2" id ='applyButton' name="applyButton"> Apply </button>
+            </div>
+
+        </div>
+
+
+        </div>
+
+        <br>
+         <div class="row">
+          <div class="col-sm-6 col-md-7 col-lg-8">
+              <h5> Outputs </h5>
+
+                  <select name="output_list" class="custom-select" size="4">
+                            {% for output in outputs %}
+                                <option value="{{output}}">{{output}}</option>
+                            {% endfor %}
+                  </select>
+
+                  <input style="margin-top: 10px;" data-toggle="tooltip" data-placement="top" title="Add to the event logs" type = "submit" class="btn btn-success" value = "Add" name= "addButton" id ='addButton' />
+                  <input style="margin-top: 10px;" type = "submit" class="btn btn-danger" value = "Delete" name= "deleteButton" id ='deleteButton'/>
+                  <input style="float: right; margin-top: 10px;" type = "submit" class="btn btn-info" value = "Download" name= "downloadButton" id ='downloadButton'/>
+
+           </div>
+              <div class="spinner-grow text-primary" style="display:none" role="status">
+                        <span class="sr-only">Loading...</span>
+             </div>
+          </div>
+
+          {% if values.load %}
+                <script>
+                    $(".spinner-grow").show();
+                </script>
+          {% endif %}
+
+        </form>
+
+
+
+      </div>
+
+{% endblock %}
+
+{% block script %}
+
+  <script>
+
+   var token = '{{csrf_token}}';
+   $(document).ready(function(){
+
+    $("#bk_type").change(function(){
+        var type = $(this).val();
+        var att = $("#bk_att").val();
+        var msg = "";
+        if(type != 'relative')
+        {
+            if(att == 'Activity')
+            {
+                msg = "control-flow & case";
+            }
+            else if (att == 'Resource')
+            {
+                msg = "organization & case";
+            }
+            else if (att == 'Activity & Resource')
+            {
+                msg = "cotrol-flow & organization & case";
+            }
+        }
+        else
+        {
+            if(att == 'Activity')
+            {
+                msg = "control-flow & case & time";
+            }
+            else if (att == 'Resource')
+            {
+                msg = "organization & case & time"
+            }
+            else if (att == 'Activity & Resource');
+            {
+                msg = "cotrol-flow & organization & case & time";
+            }
+        }
+
+        $('#perspective').text("Corresponding perspective is " + msg);
+
+        });
+
+        $("#bk_att").change(function(){
+        var att1 = $(this).val();
+        var type1 = $("#bk_type").val();
+        var msg1 = "";
+
+        if(type1 != 'relative')
+        {
+            if(att1 == 'Activity')
+            {
+                msg1 = "control-flow & case";
+            }
+            else if (att1 == 'Resource')
+            {
+                msg1 = "organization & case";
+            }
+            else if (att1 == 'Activity & Resource')
+            {
+                msg1 = "cotrol-flow & organization & case";
+            }
+        }
+        else if (type1 == 'relative')
+        {
+            if(att1 == 'Activity')
+            {
+                msg1 = "control-flow & case & time";
+            }
+            else if (att1 == 'Resource')
+            {
+                msg1 = "organization & case & time";
+            }
+            else if (att1 == 'Activity & Resource')
+            {
+                msg1 = "cotrol-flow & organization & case & time";
+            }
+        }
+
+        $('#perspective').text("Corresponding perspective is " + msg1);
+
+        });
+
+
+    });
+
+
+
+
+
+
+  $(document).ready(function(){
+      $('[data-toggle="tooltip"]').tooltip();
+    });
+
+   $( "#applyButton" ).click(function() {
+      var logname = "{{log_name}}";
+      if ( logname == ":notset:")
+      {
+        alert( "Consider the RED messages in the screen!" );
+      }
+      $(".spinner-grow").show();
+   });
+
+
+    $('div.dropdown_sensitive div.dropdown-menu a').click(function (e) {
+        var $div = $(this).parent().parent().parent();
+        var $btn = $div.find('button');
+        var clicked = $(this).text();
+        if ( clicked == "Remove All")
+        {
+            $("#sens_att_list").empty();
+        }
+        else
+        {
+            var exists = false;
+            $('#sens_att_list option').each(function(){
+                if (this.value == clicked) {
+                    exists = true;
+                    return false;
+                }
+            });
+            if (!exists)
+            {
+                var o = new Option($(this).text(), $(this).text());
+                $("#sens_att_list").append(o);
+                $('#sens_att_list option').prop('selected', true);
+            }
+        }
+    });
+
+   <!--function LoadELResult() {-->
+    <!--document.getElementById('ELResult').style.display = "block";-->
+    <!--}-->
+   <!--function LoadELResultimg() {-->
+    <!--document.getElementById('ELResultimg').style.display = "block";-->
+    <!--}-->
+  </script>
+
+{% endblock %}

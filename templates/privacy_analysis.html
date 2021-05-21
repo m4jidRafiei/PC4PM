@@ -1,0 +1,641 @@
+{% extends 'base.html' %}
+{% block style %}
+<link href="/static/plugins/bootstrap-select/css/bootstrap-select.min.css" rel="stylesheet"/>
+<style>
+    .dropdown-menu {
+        max-height: none !important;
+        overflow-y: auto !important;
+    }
+</style>
+{% endblock %}
+
+{% block content  %}
+<ul class="nav nav-tabs" id="myTab" role="tablist">
+    <li class="nav-item">
+        <a class="nav-link active" id="disclosurerisk-tab" data-toggle="tab" href="#disclosurerisk" role="tab" aria-controls="disclosurerisk" aria-selected="true">Disclosure-Risk Analysis</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" id="datautility-tab" data-toggle="tab" href="#datautility" role="tab" aria-controls="datautility" aria-selected="false">Data-Utility Analysis</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" id="bcf-tab" data-toggle="tab" href="#bcf" role="tab" aria-controls="bcf" aria-selected="false">BCF-Anonymity</a>
+    </li>
+</ul>
+<div class="tab-content" id="myTabContent">
+    <div class="tab-pane fade show {{ disclosureRiskActive }}" id="disclosurerisk" role="tabpanel" aria-labelledby="disclosurerisk-tab">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-6">
+                    <!-- Event Logs Container -->
+                    <h3 class="mt-4" style="color:#00529F;">Event Logs</h3>
+                    <div class="row">
+                        <div class=" col-sm-6 col-md-7 col-lg-8">
+                            <form name="load" action="privacy_analysis_main" method="POST" enctype="multipart/form-data">
+                                {% csrf_token %}
+                                <input type="file" value="fileupload" name="event_log" class="btn"/>
+                                <input type="submit" class="btn btn-primary mb-2" value="Upload" name="uploadButton" id="submitEL1"/>
+                                <input type="hidden" name="actionDisclosureRisk"/>
+                            </form>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class=" col-sm-8 col-md-9 col-lg-10">
+                            <form name="choice" action="privacy_analysis_main" method="POST">
+                                {% csrf_token %}
+                                <select name="log_list" class="custom-select" size="5">
+                                    {% for eventlog in eventlog_list %}
+                                    <option value="{{eventlog}}">{{eventlog}}</option>
+                                    {% endfor %}
+                                </select>
+                                <input
+                                    style="margin-top: 10px;"
+                                    data-toggle="tooltip"
+                                    data-placement="top"
+                                    title="Set as the input"
+                                    type="submit"
+                                    class="btn btn-success"
+                                    value="Set"
+                                    name="setButton"
+                                    id="setButton"
+                                />
+                                <input style="margin-top: 10px;" type="submit" class="btn btn-danger" value="Delete" name="deleteButton" id="deleteButton"/>
+                                <!--                                <input style="float: right; margin-top: 10px;" type="submit" class="btn btn-info" value="Download" name="downloadButton" id="downloadButton"/>-->
+                                <input type="hidden" name="actionDisclosureRisk"/>
+                            </br>
+                            <table style="width: 100%;" class="table table-borderless">
+                                <tr>
+                                    <td>Existence Based:</td>
+                                    <td>
+                                        <input type="checkbox" id="DR_IsExistenceBased"/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>All Life-Cycles:</td>
+                                    <td>
+                                        <input type="checkbox" id="DR_IsAllLifeCycle"/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Measure Type:</td>
+                                    <td>
+                                        <select class="selectpicker" id="DR_MeasureType">
+                                            <option selected>Average</option>
+                                            <option>Worst-Case</option>
+                                        </select>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Event Attributes:</td>
+                                    <td>
+                                        <select class="selectpicker" id="DR_EventAttributes" multiple>
+                                            {% for attribute in logEventAttributes %}
+                                            <option value="{{attribute}}">{{attribute}}</option>
+                                            {% endfor %}
+                                        </select>
+                                    </td>
+                                </tr>
+                           <tr>
+                              <td>Sensitive Attributes:</td>
+                                <td>
+                                    <select class="selectpicker" id="DR_Sensitive" multiple>
+                                        {% for ses_attribute in logCaseAttributes %}
+                                        <option value="{{attribute}}">{{ses_attribute}}</option>
+                                        {% endfor %}
+                                    </select>
+                                </td>
+                            </tr>
+                                <tr>
+                                    <td>Time Accuracy:</td>
+                                    <td>
+                                        <select class="selectpicker" id="DR_TimeAccuracy">
+                                            <option selected>Original</option>
+                                            <option>Seconds</option>
+                                            <option>Minutes</option>
+                                            <option>Hours</option>
+                                            <option>Days</option>
+                                        </select>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Life-Cycle:</td>
+                                    <td>
+                                        <select class="selectpicker" id="DR_LifeCycle" multiple>
+                                            {% for cycle in logLifecycles %}
+                                            <option value="{{cycle}}">{{cycle}}</option>
+                                            {% endfor %}
+                                        </select>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>BK-Type:</td>
+                                    <td>
+                                        <select class="selectpicker" id="DR_BKType">
+                                            <option selected>Set</option>
+                                            <option>Multiset</option>
+                                            <option>Sequence</option>
+                                        </select>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>BK Size (power):</td>
+                                    <td>
+                                        <input type="number" class="form-control" min="1" value="2" id="DR_BKSizePower"/>
+                                    </td>
+                                </tr>
+                            </table>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="col-6">
+                <h3 class="mt-4" style="color:#00529F;">Disclosure-Risk Analysis</h3>
+                <p>
+                    Selected log:
+                        {% if log_name and log_name != ':notset:' %}
+                            {{log_name}}
+                        {% else %}
+                            no selection made
+                        {% endif %}
+                </p>
+                {% if log_name and log_name != ':notset:' %}
+                <input
+                    style="margin-top: 10px;"
+                    data-toggle="tooltip"
+                    data-placement="top"
+                    title="Perform Disclosure-Risk Analysis"
+                    type="button"
+                    class="btn btn-primary"
+                    value="Perform  Disclosure-Risk Analysis"
+                    name="drAnalysis"
+                    onclick="performDisclosureRiskAnalysis();"
+                />
+                <br/>
+                <br/>
+                <span id="drResult"></span>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="tab-pane fade show {{dataUtilityActive}}" id="datautility" role="tabpanel" aria-labelledby="datautility-tab">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-6">
+                <!-- Event Logs Container -->
+                <h3 class="mt-4" style="color:#00529F;">Event Logs</h3>
+                <div class="row">
+                    <div class=" col-sm-6 col-md-7 col-lg-8">
+                        <form name="load" action="privacy_analysis_main" method="POST" enctype="multipart/form-data">
+                            {% csrf_token %}
+                            <input type="file" value="fileupload" name="event_log" class="btn"/>
+                            <input type="submit" class="btn btn-primary mb-2" value="Upload" name="uploadButton" id="submitEL2"/>
+                            <input type="hidden" name="actionDataUtility"/>
+                        </form>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class=" col-sm-8 col-md-9 col-lg-10">
+                        <form name="choice" action="privacy_analysis_main" method="POST">
+                            {% csrf_token %}
+                            <select name="log_list" class="custom-select" size="5">
+                                {% for eventlog in eventlog_list %}
+                                <option value="{{eventlog}}">{{eventlog}}</option>
+                                {% endfor %}
+                            </select>
+                            <input
+                                style="margin-top: 10px;"
+                                data-toggle="tooltip"
+                                data-placement="top"
+                                title="Set as the input"
+                                type="submit"
+                                class="btn btn-success"
+                                value="Set first log"
+                                name="setButton"
+                                id="setButton2"
+                            />
+                            <input
+                                style="margin-top: 10px;"
+                                data-toggle="tooltip"
+                                data-placement="top"
+                                title="Set as the input"
+                                type="submit"
+                                class="btn btn-success"
+                                value="Set second log"
+                                name="setButtonBackup"
+                                id="setButton2backup"
+                            />
+                            <input style="margin-top: 10px;" type="submit" class="btn btn-danger" value="Delete" name="deleteButton" id="deleteButton2"/>
+                            <!--                                <input style="float: right; margin-top: 10px;" type="submit" class="btn btn-info" value="Download" name="downloadButton" id="downloadButton2"/>-->
+                            <input type="hidden" name="actionDataUtility"/>
+                        </br>
+                        <table style="width: 100%;" class="table table-borderless">
+                            <tr>
+                                <td>All Life-Cycles:</td>
+                                <td>
+                                    <input type="checkbox" id="DU_IsAllLifeCycle"/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Event Attributes:</td>
+                                <td>
+                                    <select class="selectpicker" id="DU_EventAttributes" multiple>
+                                        {% for attribute in logEventAttributes %}
+                                        <option value="{{attribute}}">{{attribute}}</option>
+                                        {% endfor %}
+                                    </select>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Time Accuracy:</td>
+                                <td>
+                                    <select class="selectpicker" id="DU_TimeAccuracy">
+                                        <option selected>Original</option>
+                                        <option>Seconds</option>
+                                        <option>Minutes</option>
+                                        <option>Hours</option>
+                                        <option>Days</option>
+                                    </select>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Life-Cycle:</td>
+                                <td>
+                                    <select class="selectpicker" id="DU_LifeCycle" multiple>
+                                        <optgroup label="First Log">
+                                            {% for cycle in logLifecycles %}
+                                            <option value="{{cycle}}">{{cycle}}</option>
+                                            {% endfor %}
+                                        </optgroup>
+                                        <optgroup label="Second Log">
+                                            {% for cycle in logBackupLifecycles %}
+                                            <option value="{{cycle}}">{{cycle}}</option>
+                                            {% endfor %}
+                                        </optgroup>
+                                    </select>
+                                </td>
+                            </tr>
+                        </table>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="col-6">
+            <h3 class="mt-4" style="color:#00529F;">Data-Utility Analysis</h3>
+            <p>
+                Selected first log:
+                        {% if log_name and log_name != ':notset:' %}
+                            {{log_name}}
+                        {% else %}
+                            no selection made
+                        {% endif %}
+            </p>
+            <p>
+                Selected second log:
+                        {% if log_name_backup and log_name != ':notset:' %}
+                            {{log_name_backup}}
+                        {% else %}
+                            no selection made
+                        {% endif %}
+            </p>
+            {% if log_name and log_name != ':notset:' %}
+                        {% if log_name_backup and log_name != ':notset:' %}
+            <input
+                style="margin-top: 10px;"
+                data-toggle="tooltip"
+                data-placement="top"
+                title="Perform Data-Utility Analysis"
+                type="button"
+                class="btn btn-primary"
+                value="Perform Data-Utility Analysis"
+                name="duAnalysis"
+                onclick="performDataUtilityAnalysis();"
+            />
+            <br/>
+            <br/>
+            <span id="duResult"></span>
+            {% endif %}
+                    {% endif %}
+        </div>
+    </div>
+</div>
+</div>
+
+
+
+<div class="tab-pane fade show {{bcfActive}}" id="bcf" role="tabpanel" aria-labelledby="bcf-tab">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-6">
+                <!-- Event Logs Container -->
+                <h3 class="mt-4" style="color:#00529F;">Event Logs</h3>
+                <div class="row">
+                    <div class=" col-sm-6 col-md-7 col-lg-8">
+                        <form name="load" action="privacy_analysis_main" method="POST" enctype="multipart/form-data">
+                            {% csrf_token %}
+                            <input type="file" value="fileupload" name="event_log" class="btn"/>
+                            <input type="submit" class="btn btn-primary mb-2" value="Upload" name="uploadButton" id="submitEL3"/>
+                            <input type="hidden" name="actionBCF"/>
+                        </form>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class=" col-sm-8 col-md-9 col-lg-10">
+                        <form name="choice" action="privacy_analysis_main" method="POST">
+                            {% csrf_token %}
+                            <select name="log_list" class="custom-select" size="5">
+                                {% for eventlog in eventlog_list %}
+                                <option value="{{eventlog}}">{{eventlog}}</option>
+                                {% endfor %}
+                            </select>
+                            <input
+                                style="margin-top: 10px;"
+                                data-toggle="tooltip"
+                                data-placement="top"
+                                title="Set as the input"
+                                type="submit"
+                                class="btn btn-success"
+                                value="Set first log"
+                                name="setButton"
+                                id="setButton3"
+                            />
+                            <input
+                                style="margin-top: 10px;"
+                                data-toggle="tooltip"
+                                data-placement="top"
+                                title="Set as the input"
+                                type="submit"
+                                class="btn btn-success"
+                                value="Set second log"
+                                name="setButtonBackup"
+                                id="setButton3backup"
+                            />
+                            <input style="margin-top: 10px;" type="submit" class="btn btn-danger" value="Delete" name="deleteButton" id="deleteButton3"/>
+                            <!--                                <input style="float: right; margin-top: 10px;" type="submit" class="btn btn-info" value="Download" name="downloadButton" id="downloadButton2"/>-->
+                            <input type="hidden" name="actionBCF"/>
+                        </br>
+                        <table style="width: 100%;" class="table table-borderless">
+
+                            <tr>
+                                <td>All Life-Cycles:</td>
+                                <td>
+                                    <input type="checkbox" id="BCF_IsAllLifeCycle"/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Event Attributes:</td>
+                                <td>
+                                    <select class="selectpicker" id="BCF_EventAttributes" multiple>
+                                        {% for attribute in logEventAttributes %}
+                                        <option value="{{attribute}}">{{attribute}}</option>
+                                        {% endfor %}
+                                    </select>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Sensitive Attributes:</td>
+                                <td>
+                                    <select class="selectpicker" id="BCF_Sensitive" multiple>
+                                        {% for ses_attribute in logCaseAttributes %}
+                                        <option value="{{attribute}}">{{ses_attribute}}</option>
+                                        {% endfor %}
+                                    </select>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Time Accuracy:</td>
+                                <td>
+                                    <select class="selectpicker" id="BCF_TimeAccuracy">
+                                        <option selected>Original</option>
+                                        <option>Seconds</option>
+                                        <option>Minutes</option>
+                                        <option>Hours</option>
+                                        <option>Days</option>
+                                    </select>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Life-Cycle:</td>
+                                <td>
+                                    <select class="selectpicker" id="BCF_LifeCycle" multiple>
+                                        <optgroup label="First Log">
+                                            {% for cycle in logLifecycles %}
+                                            <option value="{{cycle}}">{{cycle}}</option>
+                                            {% endfor %}
+                                        </optgroup>
+                                        <optgroup label="Second Log">
+                                            {% for cycle in logBackupLifecycles %}
+                                            <option value="{{cycle}}">{{cycle}}</option>
+                                            {% endfor %}
+                                        </optgroup>
+                                    </select>
+                                </td>
+                            </tr>
+                             <tr>
+                                    <td>BK-Type:</td>
+                                    <td>
+                                        <select class="selectpicker" id="BCF_BKType">
+<!--                                            <option selected>Set</option>-->
+<!--                                            <option>Multiset</option>-->
+                                            <option>Sequence</option>
+                                        </select>
+                                    </td>
+                             </tr>
+                            <tr>
+                                    <td>BK Size (power):</td>
+                                    <td>
+                                        <input type="number" class="form-control" min="1" value="1" id="BCF_BKSizePower"/>
+                                    </td>
+                            </tr>
+                             <tr>
+                                    <td>Anonymization Parameter (n):</td>
+                                    <td>
+                                        <input type="number" class="form-control" min="1" max="5" value="1" id="BCF_AnonParam"/>
+                                    </td>
+                             </tr>
+
+                        </table>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="col-6">
+            <h3 class="mt-4" style="color:#00529F;">BCF-Anonymity</h3>
+            <p>
+                Selected first log:
+                        {% if log_name and log_name != ':notset:' %}
+                            {{log_name}}
+                        {% else %}
+                            no selection made
+                        {% endif %}
+            </p>
+            <p>
+                Selected second log:
+                        {% if log_name_backup and log_name != ':notset:' %}
+                            {{log_name_backup}}
+                        {% else %}
+                            no selection made
+                        {% endif %}
+            </p>
+            {% if log_name and log_name != ':notset:' %}
+                        {% if log_name_backup and log_name != ':notset:' %}
+            <input
+                style="margin-top: 10px;"
+                data-toggle="tooltip"
+                data-placement="top"
+                title="Perform BCF-Anonymity Analysis"
+                type="button"
+                class="btn btn-primary"
+                value="Perform BCF-Anonymity Analysis"
+                name="bcfAnalysis"
+                onclick="performBCFAnalysis();"
+            />
+            <br/>
+            <br/>
+            <span id="bcfResult"></span>
+            {% endif %}
+                    {% endif %}
+        </div>
+    </div>
+</div>
+</div>
+
+
+</div>
+
+
+
+
+{% endblock %}
+
+{% block script %}
+<script src="/static/plugins/bootstrap-select/js/bootstrap-select.min.js"></script>
+<script>
+    var token = '{{csrf_token}}';
+
+    $(document).ready(function(){
+      $('[data-toggle="tooltip"]').tooltip();
+    });
+
+    function performDataUtilityAnalysis() {
+        $.ajax({
+            headers: { "X-CSRFToken": token },
+            type: "GET",
+            url: "privacy_analysis_main",
+            data: {'analysis': 'dataUtility', 'data': JSON.stringify({
+                'DU_IsExistenceBased': $('#DU_IsExistenceBased').prop("checked"),
+                'DU_IsAllLifeCycle': $('#DU_IsAllLifeCycle').prop("checked"),
+                'DU_EventAttributes': $('#DU_EventAttributes').val(),
+                'DU_TimeAccuracy': $('#DU_TimeAccuracy').val(),
+                'DU_LifeCycle': $('#DU_LifeCycle').val()
+            }) }
+            //dataType: 'json', //causes readystate 4 error if result is not json
+        }).done(result =>
+        {
+            $('#duResult').text("Calculcated Data-Utility value: " + result.Utility);
+        })
+        .fail(result =>
+        {
+            $('#duResult').text("Something went wrong!");
+        });
+    }
+
+     function performBCFAnalysis() {
+        $.ajax({
+            headers: { "X-CSRFToken": token },
+            type: "GET",
+            url: "privacy_analysis_main",
+            data: {'analysis': 'BCF', 'data': JSON.stringify({
+                'BCF_IsAllLifeCycle': $('#BCF_IsAllLifeCycle').prop("checked"),
+                'BCF_EventAttributes': $('#BCF_EventAttributes').val(),
+                'BCF_TimeAccuracy': $('#BCF_TimeAccuracy').val(),
+                'BCF_BKType': $('#BCF_BKType').val(),
+                'BCF_LifeCycle': $('#BCF_LifeCycle').val(),
+                'BCF_BKSizePower': $('#BCF_BKSizePower').val(),
+                'BCF_Sensitive': $('#BCF_Sensitive').val(),
+                'BCF_AnonParam': $('#BCF_AnonParam').val()
+            }) }
+            //dataType: 'json', //causes readystate 4 error if result is not json
+        }).done(result =>
+        {
+             $('#bcfResult').html("Calculcated anonymity values: " +
+            `<table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">Name</th>
+                        <th scope="col">Value</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>First event log k-anonymity</td><td>` + result.BCF.R1_KA + `</td>
+                    </tr>
+                    <tr>
+                        <td>Second event log k-anonymity</td><td>` + result.BCF.R2_KA + `</td>
+                    </tr>
+                    <tr>
+                        <td>B-anonymity</td><td>` + result.BCF.BA + `</td>
+                    </tr>
+                    <tr>
+                        <td>C-anonymity</td><td>` + result.BCF.CA + `</td>
+                    </tr>
+                    <tr>
+                        <td>F-anonymity</td><td>` + result.BCF.FA + `</td>
+                    </tr>
+                </tbody>
+            </table>`);
+        })
+        .fail(result =>
+        {
+            $('#duResult').text("Something went wrong!");
+        });
+    }
+
+    function performDisclosureRiskAnalysis() {
+        $.ajax({
+            headers: { "X-CSRFToken": token },
+            type: "GET",
+            url: "privacy_analysis_main",
+            data: {'analysis': 'disclosureRisk', 'data': JSON.stringify({
+                'DR_IsExistenceBased': $('#DR_IsExistenceBased').prop("checked"),
+                'DR_IsAllLifeCycle': $('#DR_IsAllLifeCycle').prop("checked"),
+                'DR_MeasureType': $('#DR_MeasureType').val(),
+                'DR_EventAttributes': $('#DR_EventAttributes').val(),
+                'DR_TimeAccuracy': $('#DR_TimeAccuracy').val(),
+                'DR_LifeCycle': $('#DR_LifeCycle').val(),
+                'DR_BKType': $('#DR_BKType').val(),
+                'DR_Sensitive': $('#DR_Sensitive').val(),
+                'DR_BKSizePower': $('#DR_BKSizePower').val()
+            }) }
+            //dataType: 'json', //causes readystate 4 error if result is not json
+        }).done(result =>
+        {
+            $('#drResult').html("Calculcated Disclosure-Risk values: " +
+            `<table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">Name</th>
+                        <th scope="col">Value</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Case Disclosure</td><td>` + result.Risk.cd + `</td>
+                    </tr>
+                    <tr>
+                        <td>Trace Disclosure</td><td>` + result.Risk.td + `</td>
+                    </tr>
+                    <tr>
+                        <td>Attribute Disclosure</td><td>` + result.Risk.ad + `</td>
+                    </tr>
+                </tbody>
+            </table>`);
+        })
+        .fail(result =>
+        {
+            $('#drResult').text("Something went wrong!");
+        });
+    }
+</script>
+{% endblock %}

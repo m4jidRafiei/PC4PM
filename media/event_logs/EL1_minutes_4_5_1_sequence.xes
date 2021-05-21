@@ -1,0 +1,148 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<log>
+  <list key="privacy:anonymizations">
+    <values>
+      <list key="privacy:anonymizer1">
+        <values>
+          <string key="privacy:operation type" value="suppression"/>
+          <string key="privacy:level" value="event"/>
+          <string key="privacy:target" value="event"/>
+        </values>
+      </list>
+    </values>
+  </list>
+  <extension name="Privacy" prefix="privacy" uri="paper_version_uri/privacy.xesext"/>
+  <classifier name="MXML Legacy Classifier" keys="concept:name lifecycle:transition"/>
+  <classifier name="Event Name" keys="concept:name"/>
+  <classifier name="Resource" keys="org:resource"/>
+  <trace>
+    <string key="concept:name" value="0"/>
+    <string key="description" value="Simulated process instance"/>
+    <string key="Diagnose" value="Corona"/>
+    <event>
+      <string key="call centre" value="Brisbane"/>
+      <string key="org:resource" value="j"/>
+      <date key="time:timestamp" value="1971-01-01T00:00:00.000+00:00"/>
+      <string key="lifecycle:transition" value="complete"/>
+      <string key="concept:name" value="a"/>
+    </event>
+    <event>
+      <string key="org:resource" value="m"/>
+      <date key="time:timestamp" value="1971-01-01T00:00:00.000+00:00"/>
+      <string key="lifecycle:transition" value="start"/>
+      <string key="location" value="Brisbane"/>
+      <string key="concept:name" value="b"/>
+    </event>
+    <event>
+      <string key="org:resource" value="j"/>
+      <date key="time:timestamp" value="1971-01-01T00:00:00.000+00:00"/>
+      <string key="lifecycle:transition" value="complete"/>
+      <string key="location" value="Brisbane"/>
+      <string key="concept:name" value="d"/>
+    </event>
+  </trace>
+  <trace>
+    <string key="concept:name" value="1"/>
+    <string key="description" value="Simulated process instance"/>
+    <string key="Diagnose" value="Corona"/>
+    <event>
+      <string key="call centre" value="Sydney"/>
+      <string key="org:resource" value="j"/>
+      <date key="time:timestamp" value="1971-01-01T00:00:00.000+00:00"/>
+      <string key="lifecycle:transition" value="complete"/>
+      <string key="concept:name" value="a"/>
+    </event>
+    <event>
+      <string key="org:resource" value="m"/>
+      <date key="time:timestamp" value="1971-01-01T00:00:00.000+00:00"/>
+      <string key="lifecycle:transition" value="start"/>
+      <string key="location" value="Sydney"/>
+      <string key="concept:name" value="b"/>
+    </event>
+    <event>
+      <string key="org:resource" value="j"/>
+      <date key="time:timestamp" value="1971-01-01T00:00:00.000+00:00"/>
+      <string key="lifecycle:transition" value="complete"/>
+      <string key="location" value="Sydney"/>
+      <string key="concept:name" value="d"/>
+    </event>
+  </trace>
+  <trace>
+    <string key="concept:name" value="2"/>
+    <string key="description" value="Simulated process instance"/>
+    <string key="Diagnose" value="Corona"/>
+    <event>
+      <string key="call centre" value="Brisbane"/>
+      <string key="org:resource" value="s"/>
+      <date key="time:timestamp" value="1971-01-01T00:00:00.000+00:00"/>
+      <string key="lifecycle:transition" value="complete"/>
+      <string key="concept:name" value="a"/>
+    </event>
+    <event>
+      <string key="org:resource" value="Car"/>
+      <date key="time:timestamp" value="1971-01-01T00:00:00.000+00:00"/>
+      <string key="lifecycle:transition" value="start"/>
+      <string key="location" value="Brisbane"/>
+      <string key="concept:name" value="b"/>
+    </event>
+    <event>
+      <string key="org:resource" value="s"/>
+      <date key="time:timestamp" value="1971-01-01T00:00:00.000+00:00"/>
+      <string key="lifecycle:transition" value="complete"/>
+      <string key="location" value="Brisbane"/>
+      <string key="concept:name" value="d"/>
+    </event>
+  </trace>
+  <trace>
+    <string key="concept:name" value="3"/>
+    <string key="description" value="Simulated process instance"/>
+    <string key="Diagnose" value="HIV"/>
+    <event>
+      <string key="call centre" value="Brisbane"/>
+      <string key="org:resource" value="s"/>
+      <date key="time:timestamp" value="1971-01-01T00:00:00.000+00:00"/>
+      <string key="lifecycle:transition" value="complete"/>
+      <string key="concept:name" value="a"/>
+    </event>
+    <event>
+      <string key="org:resource" value="Car"/>
+      <date key="time:timestamp" value="1971-01-01T02:40:00.000+00:00"/>
+      <string key="lifecycle:transition" value="start"/>
+      <string key="location" value="Brisbane"/>
+      <string key="concept:name" value="b"/>
+    </event>
+    <event>
+      <string key="org:resource" value="s"/>
+      <date key="time:timestamp" value="1971-01-01T02:41:00.000+00:00"/>
+      <string key="lifecycle:transition" value="complete"/>
+      <string key="location" value="Brisbane"/>
+      <string key="concept:name" value="d"/>
+    </event>
+  </trace>
+  <trace>
+    <string key="concept:name" value="4"/>
+    <string key="description" value="Simulated process instance"/>
+    <string key="Diagnose" value="HIV"/>
+    <event>
+      <string key="call centre" value="Brisbane"/>
+      <string key="org:resource" value="s"/>
+      <date key="time:timestamp" value="1971-01-01T00:00:00.000+00:00"/>
+      <string key="lifecycle:transition" value="complete"/>
+      <string key="concept:name" value="a"/>
+    </event>
+    <event>
+      <string key="org:resource" value="cl"/>
+      <date key="time:timestamp" value="1971-01-01T00:11:00.000+00:00"/>
+      <string key="lifecycle:transition" value="start"/>
+      <string key="location" value="Brisbane"/>
+      <string key="concept:name" value="b"/>
+    </event>
+    <event>
+      <string key="org:resource" value="cl"/>
+      <date key="time:timestamp" value="1971-01-01T00:11:00.000+00:00"/>
+      <string key="lifecycle:transition" value="complete"/>
+      <string key="location" value="Brisbane"/>
+      <string key="concept:name" value="d"/>
+    </event>
+  </trace>
+</log>
