@@ -18,6 +18,7 @@ from pm4py.objects.log.exporter.xes import factory as xes_exporter
 from p_privacy_qt.SMS import SMS
 from p_privacy_qt.EMD import EMD
 
+
 from pp_cedp.CEDP import CEDP
 
 def privacy_analysis_main(request):
@@ -59,9 +60,15 @@ def privacy_analysis_main(request):
         if("actionDataUtility" in request.POST):
             returnObject['dataUtilityActive'] = "active"
             returnObject['disclosureRiskActive'] = ""
-
-        # if ("actionBCF" in request.POST):
-        #     returnObject['bcfActive'] = "active"
+            returnObject['bcfActive'] = ""
+        elif ("actionBCF" in request.POST):
+            returnObject['dataUtilityActive'] = ""
+            returnObject['disclosureRiskActive'] = ""
+            returnObject['bcfActive'] = "active"
+        elif ("disclosureRiskActive" in request.POST):
+            returnObject['dataUtilityActive'] = ""
+            returnObject['disclosureRiskActive'] = "active"
+            returnObject['bcfActive'] = ""
 
         if request.is_ajax():
             return render(request, 'privacy_analysis.html', returnObject)

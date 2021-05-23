@@ -1,25 +1,584 @@
 {% extends 'base.html' %}
 
-{% block content  %}
 
-      <div class="container-fluid">
-        <h3 class="mt-4" style="color:#00529F;">Privacy-Preserving Data Publishing in Process Mining</h3>
-          <br>
-          <ul>
-          <li style="color:#00549f;font-size:20px;">Use the left menu to apply state-of-the-art privacy preservation techniques on your event data...</li>
-          <br>
-          </ul>
-      </div>
+{% block style %}
+<link href="/static/plugins/bootstrap-select/css/bootstrap-select.min.css" rel="stylesheet" />
+
+<style>
+    * {
+        margin: 0;
+        padding: 0
+    }
+
+    html {
+        height: 100%
+    }
+
+
+    #msform {
+        text-align: center;
+        position: relative;
+        margin-top: 20px
+    }
+
+    #msform fieldset .form-card {
+        background: white;
+        border: 0 none;
+        border-radius: 0px;
+        box-shadow: 0 2px 2px 2px rgba(0, 0, 0, 0.2);
+        padding: 20px 40px 30px 40px;
+        box-sizing: border-box;
+        width: 94%;
+        margin: 0 3% 20px 3%;
+        position: relative
+    }
+
+    #msform fieldset {
+        background: white;
+        border: 0 none;
+        border-radius: 0.5rem;
+        box-sizing: border-box;
+        width: 100%;
+        margin: 0;
+        padding-bottom: 20px;
+        position: relative
+    }
+
+    #msform fieldset:not(:first-of-type) {
+        display: none
+    }
+
+    #msform fieldset .form-card {
+        text-align: left;
+        color: #9E9E9E
+    }
+
+    #msform input,
+    #msform textarea {
+        padding: 0px 8px 4px 8px;
+        border: none;
+        border-bottom: 1px solid #ccc;
+        border-radius: 0px;
+        margin-bottom: 25px;
+        margin-top: 2px;
+        width: 100%;
+        box-sizing: border-box;
+        font-family: montserrat;
+        color: #2C3E50;
+        font-size: 16px;
+        letter-spacing: 1px
+    }
+
+    #msform input:focus,
+    #msform textarea:focus {
+        -moz-box-shadow: none !important;
+        -webkit-box-shadow: none !important;
+        box-shadow: none !important;
+        border: none;
+        font-weight: bold;
+        border-bottom: 2px solid skyblue;
+        outline-width: 0
+    }
+
+    #msform .action-button {
+        width: 100px;
+        background: skyblue;
+        font-weight: bold;
+        color: white;
+        border: 0 none;
+        border-radius: 0px;
+        cursor: pointer;
+        padding: 10px 5px;
+        margin: 10px 5px
+    }
+
+    #msform .action-button:hover,
+    #msform .action-button:focus {
+        box-shadow: 0 0 0 2px white, 0 0 0 3px skyblue
+    }
+
+    #msform .action-button-previous {
+        width: 100px;
+        background: #616161;
+        font-weight: bold;
+        color: white;
+        border: 0 none;
+        border-radius: 0px;
+        cursor: pointer;
+        padding: 10px 5px;
+        margin: 10px 5px
+    }
+
+    #msform .action-button-previous:hover,
+    #msform .action-button-previous:focus {
+        box-shadow: 0 0 0 2px white, 0 0 0 3px #616161
+    }
+
+    #msform .action-button-reset {
+        width: 100px;
+        background: rgb(255, 102, 102);
+        font-weight: bold;
+        color: white;
+        border: 0 none;
+        border-radius: 0px;
+        cursor: pointer;
+        padding: 10px 5px;
+        margin: 10px 5px
+    }
+
+    #msform .action-button-reset:hover,
+    #msform .action-button-reset:focus {
+        box-shadow: 0 0 0 2px white, 0 0 0 3px rgb(255, 102, 102)
+    }
+
+    select.list-dt {
+        border: none;
+        outline: 0;
+        border-bottom: 1px solid #ccc;
+        padding: 2px 5px 3px 5px;
+        margin: 2px
+    }
+
+    select.list-dt:focus {
+        border-bottom: 2px solid skyblue
+    }
+
+    .card {
+        z-index: 0;
+        border: none;
+        border-radius: 0.5rem;
+        position: relative
+    }
+
+    .fs-title {
+        font-size: 25px;
+        color: #2C3E50;
+        margin-bottom: 10px;
+        font-weight: bold;
+        text-align: left
+    }
+
+    #progressbar {
+        margin-bottom: 30px;
+        overflow: hidden;
+        color: lightgrey
+    }
+
+    #progressbar .active {
+        color: #000000
+    }
+
+    #progressbar li {
+        list-style-type: none;
+        font-size: 12px;
+        width: 25%;
+        float: left;
+        position: relative
+    }
+
+    #progressbar #pmps:before {
+        content: "1"
+    }
+
+    #progressbar #pmac:before {
+        content: "2"
+    }
+
+    #progressbar #prps:before {
+        content: "3"
+    }
+
+    #progressbar #prac:before {
+        content: "4"
+    }
+
+
+    #progressbar li:before {
+        width: 50px;
+        height: 50px;
+        line-height: 45px;
+        display: block;
+        font-size: 18px;
+        color: #ffffff;
+        background: lightgray;
+        border-radius: 50%;
+        margin: 0 auto 10px auto;
+        padding: 2px
+    }
+
+    #progressbar li:after {
+        content: '';
+        width: 100%;
+        height: 2px;
+        background: lightgray;
+        position: absolute;
+        left: 0;
+        top: 25px;
+        z-index: -1
+    }
+
+    #progressbar li.active:before,
+    #progressbar li.active:after {
+        background: skyblue
+    }
+
+    .radio-group {
+        position: relative;
+        margin-bottom: 25px
+    }
+
+    .radio {
+        display: inline-block;
+        width: 204;
+        height: 104;
+        border-radius: 0;
+        background: lightblue;
+        box-shadow: 0 2px 2px 2px rgba(0, 0, 0, 0.2);
+        box-sizing: border-box;
+        cursor: pointer;
+        margin: 8px 2px
+    }
+
+    .radio:hover {
+        box-shadow: 2px 2px 2px 2px rgba(0, 0, 0, 0.3)
+    }
+
+    .radio.selected {
+        box-shadow: 1px 1px 2px 2px rgba(0, 0, 0, 0.1)
+    }
+
+    .fit-image {
+        width: 100%;
+        object-fit: cover
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+
+<div class="container-fluid">
+    <h3 class="mt-4" style="color:#00529F;">Privacy-Preserving Data Publishing in Process Mining</h3>
+    <br>
+    <ul>
+        <li style="color:#00549f;font-size:20px;">Use the left menu to apply state-of-the-art privacy preservation
+            techniques on your event data...</li>
+        <br>
+    </ul>
+
+
+
+    <!--WIZARD-->
+    <!-- MultiStep Form by Omkar Bailkeri https://bbbootstrap.com/snippets/multi-step-form-wizard-30467045 -->
+    <div class="container-fluid">
+        <div class="row justify-content-center mt-0">
+            <div class="col-11 col-sm-9 col-md-7 col-lg-6 text-center p-0 mt-3 mb-2">
+                <div class="card px-0 pt-4 pb-0 mt-3 mb-3  shadow p-3 mb-5 bg-white rounded">
+                    <h2><strong>Need help?</strong></h2>
+                    <p>Fill in our wizard to get recommendations on privacy operations</p>
+                    <div class="row">
+                        <div class="col-md-12 mx-0">
+                            <form id="msform">
+                                <!-- progressbar -->
+                                <ul id="progressbar">
+                                    <li class="active" id="pmps"><strong>PMPS</strong></li>
+                                    <li id="pmac"><strong>PMAC</strong></li>
+                                    <li id="prps"><strong>PRPS</strong></li>
+                                    <li id="prac"><strong>PRAC</strong></li>
+                                </ul> <!-- fieldsets -->
+                                <fieldset id="pmps_fs">
+                                    <div class="form-card">
+                                        <h2 class="fs-title">Process Mining Perspective</h2>
+
+                                        <div class="input-group mb-3">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text input-group-mediumWith"
+                                                    id="basic-addon1">Operation:</span>
+                                            </div>
+                                            <select class="selectpicker" title="Choose Operation..." id="WIZ_PMPS_Type" multiple>
+                                                <option>Organizational</option>
+                                                <option>Control-Flow</option>
+                                                <option>Time</option>
+                                                <option>Case</option>
+                                            </select>
+                                            <div class="invalid-feedback">
+                                                Please choose an operation
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <input type="button" name="next" class="next action-button" value="Next Step" />
+                                </fieldset>
+                                <fieldset>
+                                    <div class="form-card">
+                                        <h2 class="fs-title">Process Mining Activity</h2>
+
+                                        <div class="input-group mb-3">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text input-group-mediumWith" id="basic-addon1">Operation:</span>
+                                            </div>
+                                            <select class="selectpicker" title="Choose Operation..." id="WIZ_PMAC_Type" multiple>
+                                                <option>Joint-Activities social network discovery</option>
+                                                <option>Role Mining</option>
+                                                <option>Process discovery based on directly-follows graph</option>
+                                                <option>Process discovery</option>
+                                                <option>Performance Analysis</option>
+                                                <option>Organizational Mining</option>
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <input type="button" name="previous" class="previous action-button-previous" value="Previous" />
+                                    <input type="button" name="next" class="next action-button" value="Next Step" />
+                                </fieldset>
+                                <fieldset>
+                                    <div class="form-card">
+                                        <h2 class="fs-title">Privacy Perspective Activity</h2>
+
+                                        <div class="input-group mb-3">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text input-group-mediumWith" id="basic-addon1">Operation:</span>
+                                            </div>
+                                        <select class="selectpicker" title="Choose Operation..." id="WIZ_PRPS_Type">
+                                            <option selected>Resource</option>
+                                            <option>Case</option>
+                                        </select>
+                                        </div>
+                                    </div>
+                                    <input type="button" name="previous" class="previous action-button-previous" value="Previous" />
+                                    <input type="button" name="next" class="next action-button" value="Next Step" />
+                                </fieldset>
+                                <fieldset>
+                                    <div class="form-card">
+                                        <h2 class="fs-title text-center">Privacy Activity</h2> <br><br>
+
+                                        <div class="input-group mb-3">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text input-group-mediumWith" id="basic-addon1">Operation:</span>
+                                            </div>
+                                        <select class="selectpicker" title="Choose Operation..." id="WIZ_PRAC_Type">
+                                            <option selected>PPDP</option>
+                                            <option>PPPM</option>
+                                        </select>
+                                        </div>
+                                    </div>
+                                    <input type="button" name="previous" class="previous action-button-previous" value="Previous" />
+                                    <input type="button" name="submit" class="next action-button" value="Confirm" />
+                                </fieldset>
+                                <fieldset>
+                                    <div class="form-card">
+                                        <h2 class="fs-title text-center">Suggestion</h2> <br><br>
+
+                                        <h3>Here comes the Suggestion text</h3>
+                                        <div id="WIZ_SuggestionText">Here comes the Suggestion text</div>
+                                    </div>
+                                    <input type="button" name="previous" class="reset action-button-reset" value="Reset" />
+                                </fieldset>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
 
 {% endblock %}
 
 {% block script %}
 
 <script>
-    $("#menu-toggle").click(function(e) {
-      e.preventDefault();
-      $("#wrapper").toggleClass("toggled");
+    $("#menu-toggle").click(function (e) {
+        e.preventDefault();
+        $("#wrapper").toggleClass("toggled");
     });
 </script>
 
+
+
+<script src="/static/plugins/bootstrap-select/js/bootstrap-select.min.js"></script>
+<script>
+    $(document).ready(function () {
+        var data = {
+            "PMPS": {
+                "Organizational": ["Privacy-Aware Role Mining", "TLKC-Privacy-Extended"],
+                "Control-Flow": ["Connector Method", "TLKC-Privacy", "TLKC-Privacy-Extended"],
+                "Time": ["TLKC-Privacy", "TLKC-Privacy-Extended"],
+                "Case": ["TLKC-Privacy", "TLKC-Privacy-Extended"]
+            },
+            "PMAC": {
+                "Joint-Activities social network discovery": ["Privacy-Aware Role Mining"],
+                "Role Mining": ["Privacy-Aware Role Mining"],
+                "Process discovery based on directly-follows graph": ["Connector Method"],
+                "Process discovery": ["TLKC-Privacy", "TLKC-Privacy-Extended"],
+                "Performance Analysis": ["TLKC-Privacy", "TLKC-Privacy-Extended"],
+                "Organizational Mining": ["TLKC-Privacy-Extended"]
+            },
+            "PRPS": {
+                "Resource": ["Privacy-Aware Role Mining"],
+                "Case": ["Connector Method", "TLKC-Privacy", "TLKC-Privacy-Extended"]
+            },
+            "PRAC": {
+                "PPDP": ["Privacy-Aware Role Mining", "Connector Method", "TLKC-Privacy", "TLKC-Privacy-Extended"],
+                "PPPM": ["Connector Method"]
+            }
+        };
+        var appLinks = 
+        {
+            "Privacy-Aware Role Mining" : "#menuLink_PrivacyAwareRoleMining",
+            "Connector Method": "#menuLink_ConnectorMethod",
+            "TLKC-Privacy":"#menuLink_TLKCprivacy",
+            "TLKC-Privacy-Extended":"#menuLink_TLKCprivacyExtended",
+            "Anonymization Operations":"#menuLink_AnonymizationOperations",
+            "PrivacyAnalysis":"#menuLink_PrivacyAnalysis"
+        };
+        var suggestionTexts = 
+        {
+            "Privacy-Aware Role Mining" : "TEst1",
+            "Connector Method": "Test <a href='/connector/connector_main'> Connector Method<a/>",
+            "TLKC-Privacy":"Test <a href='/tlkc_privacy/tlkc_main'>TLKC<a/>",
+            "TLKC-Privacy-Extended":"",
+            "Anonymization Operations":"",
+            "PrivacyAnalysis":""
+        };
+        function makeSuggestion(){
+            var counter = {};
+            var count = (arr) => 
+            {
+                arr.forEach((j,k)=>
+                {
+                    if(!(j in counter)) counter[j] = 0;
+                    counter[j] += 1;
+                });  
+            };
+
+            $("#WIZ_PMPS_Type option:selected").each((i, e) => {            
+                count(data["PMPS"][$(e).val()]);
+            });
+            $("#WIZ_PMAC_Type option:selected").each((i, e) => {            
+                count(data["PMAC"][$(e).val()]);
+            });            
+            count(data["PRPS"][$("#WIZ_PRPS_Type").val()]);
+            count(data["PRAC"][$("#WIZ_PRAC_Type").val()]);
+
+            // Create items array
+            var items = Object.keys(counter).map((key) => [key, counter[key]]);
+
+            // Sort the array based on the second element
+            items.sort((first, second) => second[1] - first[1]);
+
+            // Create a new array with only the first 5 items
+            console.log(items.slice(0, 5));
+            items.slice(0, 2).forEach(x=> {
+                var item = x[0];
+                var link = appLinks[item];
+                $(link).css("box-shadow", "inset 0 0 10px -10px #3f3");
+                $(link).css("-webkit-box-shadow", "inset 0px 0px 10px 10px #3f3");
+                
+                //suggestionTexts
+                var text = suggestionTexts[item];
+                $("#WIZ_SuggestionText").append(text);
+            });
+
+            document.cookie = "anonOpsSuggestionSettings={'Test':0}";
+        }
+
+        var current_fs, next_fs, previous_fs; //fieldsets
+        var opacity;
+
+        $(".next").click(function() {
+            current_fs = $(this).parent();
+            next_fs = $(this).parent().next();
+
+            //Add Class Active
+            $("#progressbar li").eq($("fieldset").index(next_fs)).addClass("active");
+
+            //show the next fieldset
+            next_fs.show();
+            //hide the current fieldset with style
+            current_fs.animate({ opacity: 0 }, {
+                step: function (now) {
+                    // for making fielset appear animation
+                    opacity = 1 - now;
+
+                    current_fs.css({
+                        'display': 'none',
+                        'position': 'relative'
+                    });
+                    next_fs.css({ 'opacity': opacity });
+                },
+                duration: 600
+            });
+
+            if($(this).attr("name") === "submit") {
+                makeSuggestion();                
+            }
+        });
+
+        $(".previous").click(function () {
+
+            current_fs = $(this).parent();
+            previous_fs = $(this).parent().prev();
+
+            //Remove class active
+            $("#progressbar li").eq($("fieldset").index(current_fs)).removeClass("active");
+
+            //show the previous fieldset
+            previous_fs.show();
+
+            //hide the current fieldset with style
+            current_fs.animate({ opacity: 0 }, {
+                step: function (now) {
+                    // for making fielset appear animation
+                    opacity = 1 - now;
+
+                    current_fs.css({
+                        'display': 'none',
+                        'position': 'relative'
+                    });
+                    previous_fs.css({ 'opacity': opacity });
+                },
+                duration: 600
+            });
+        });
+
+        $(".reset").click(function () {
+
+            current_fs = $(this).parent();
+            first_fs = $("#pmps_fs");
+
+            //Remove class active
+            ["#pmac", "#prps", "#prac"].forEach(e => $(e).removeClass("active"));
+
+            //show the previous fieldset
+            first_fs.show();
+            
+            //hide the current fieldset with style
+            current_fs.animate({ opacity: 0 }, {
+                step: function (now) {
+                    // for making fielset appear animation
+                    opacity = 1 - now;
+
+                    current_fs.css({
+                        'display': 'none',
+                        'position': 'relative'
+                    });
+                    first_fs.css({ 'opacity': opacity });
+                },
+                duration: 600
+            });
+        });
+
+        $('.radio-group .radio').click(function () {
+            $(this).parent().find('.radio').removeClass('selected');
+            $(this).addClass('selected');
+        });
+
+        $(".submit").click(function () {
+            
+            return false;
+        })
+
+    });
+
+</script>
 {% endblock %}

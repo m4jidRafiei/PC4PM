@@ -39,17 +39,17 @@
     <div class="bg-light border-right" id="sidebar-wrapper">
 
       <div class="list-group list-group-flush">
-        <div class="sidebar-heading"><img style='height: 100%; width:100%;object-fit: contain '
-            src="{% static 'images/PC4PM50.png' %}" /> </div>
-        <a href="/upload/upload_eventlog" class="list-group-item list-group-item-action bg-light">Event Data</a>
-        <a href="/role_mining/role_main" class="list-group-item list-group-item-action bg-light">Privacy-Aware Role
-          Mining</a>
-        <a href="/connector/connector_main" class="list-group-item list-group-item-action bg-light">Connector Method</a>
-        <a href="/tlkc_privacy/tlkc_main" class="list-group-item list-group-item-action bg-light">TLKC-privacy</a>
-        <a href="/tlkc_privacy_ext/tlkc_ext_main" class="list-group-item list-group-item-action bg-light">TLKC-privacy Extended</a>
-        <a href="/anonymization/anonymization_main" class="list-group-item list-group-item-action bg-light">Anonymization Operations</a>
-        <a href="/privacy_analysis/privacy_analysis_main" class="list-group-item list-group-item-action bg-light">Privacy Analysis</a>
-        <a href="/privacy_analysis/pripel" class="list-group-item list-group-item-action bg-light">PRIPEL</a>
+        <div class="sidebar-heading">
+          <a href="/"><img style='height: 100%; width:100%;object-fit: contain ' src="{% static 'images/PC4PM50.png' %}" /> </a>
+          </div>
+            <a href="/upload/upload_eventlog" class="list-group-item list-group-item-action bg-light" id="menuLink_EventData">Event Data</a>
+            <a href="/role_mining/role_main" class="list-group-item list-group-item-action bg-light" id="menuLink_PrivacyAwareRoleMining">Privacy-Aware Role Mining</a>
+            <a href="/connector/connector_main" class="list-group-item list-group-item-action bg-light" id="menuLink_ConnectorMethod">Connector Method</a>
+            <a href="/tlkc_privacy/tlkc_main" class="list-group-item list-group-item-action bg-light" id="menuLink_TLKCprivacy">TLKC-privacy</a>
+            <a href="/tlkc_privacy_ext/tlkc_ext_main" class="list-group-item list-group-item-action bg-light" id="menuLink_TLKCprivacyExtended">TLKC-privacy Extended</a>
+            <a href="/anonymization/anonymization_main" class="list-group-item list-group-item-action bg-light" id="menuLink_AnonymizationOperations">Anonymization Operations</a>
+            <a href="/privacy_analysis/privacy_analysis_main" class="list-group-item list-group-item-action bg-light" id="menuLink_PrivacyAnalysis">Privacy Analysis</a>
+        <a href="/pripel/pripel_main" class="list-group-item list-group-item-action bg-light" id="menuLink_PrivacyAnalysis_PRIPEL">PRIPEL</a>
         <a href="/comming_main" class="list-group-item list-group-item-action bg-light">Comming Soon...</a>
       </div>
     </div>

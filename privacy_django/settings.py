@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'anonymization.apps.AnonymizationConfig',
     'privacy_analysis.apps.PrivacyAnalysisConfig',
     'tlkc_privacy_ext.apps.TlkcPrivacyExtConfig',
+    'pripel.apps.PripelConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -153,6 +154,9 @@ ALLOWED_HOSTS = ['*', ]
 
 TLKC_EXT_APPLIED = False
 TLKC_EXT_FILE = ''
+
+PRIPEL_FILE = ''
+PRIPEL_APPLIED = False
 
 # for uploading large files > 2.5 Mb
 # FILE_UPLOAD_HANDLERS = [
