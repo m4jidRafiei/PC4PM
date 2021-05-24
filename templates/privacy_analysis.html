@@ -79,7 +79,7 @@
                                         <td>
                                             <select class="selectpicker" id="DR_MeasureType">
                                                 <option selected>Average</option>
-                                                <option>Worst-Case</option>
+                                                <option>Worst_Case</option>
                                             </select>
                                         </td>
                                     </tr>
@@ -98,7 +98,7 @@
                                         <td>
                                             <select class="selectpicker" id="DR_Sensitive" multiple>
                                                 {% for ses_attribute in logCaseAttributes %}
-                                                <option value="{{attribute}}">{{ses_attribute}}</option>
+                                                <option value="{{ses_attribute}}">{{ses_attribute}}</option>
                                                 {% endfor %}
                                             </select>
                                         </td>
@@ -359,7 +359,7 @@
                                         <td>
                                             <select class="selectpicker" id="BCF_Sensitive" multiple>
                                                 {% for ses_attribute in logCaseAttributes %}
-                                                <option value="{{attribute}}">{{ses_attribute}}</option>
+                                                <option value="{{ses_attribute}}">{{ses_attribute}}</option>
                                                 {% endfor %}
                                             </select>
                                         </td>
@@ -607,23 +607,26 @@
                 }).done(result => {
                     $('#drResult').html("Calculcated Disclosure-Risk values: " +
                         `<table class="table">
-                <thead>
-                    <tr>
-                        <th scope="col">Name</th>
-                        <th scope="col">Value</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>Case Disclosure</td><td>` + result.Risk.cd + `</td>
-                    </tr>
-                    <tr>
-                        <td>Trace Disclosure</td><td>` + result.Risk.td + `</td>
-                    </tr>
-                    <tr>
-                        <td>Attribute Disclosure</td><td>` + result.Risk.ad + `</td>
-                    </tr>
-                </tbody>
+                        <thead>
+                            <tr>
+                                <th scope="col">Name</th>
+                                <th scope="col">Value</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Case Disclosure</td><td>` + result.Risk.cd + `</td>
+                            </tr>
+                            <tr>
+                                <td>Trace Disclosure</td><td>` + result.Risk.td + `</td>
+                            </tr>
+                            <tr>
+                                <td>Attribute Disclosure</td><td>` + result.Risk.ad + `</td>
+                            </tr>
+                            <tr>
+                                <td>No. Unique Matches</td><td>` + result.Risk.um + `</td>
+                            </tr>
+                        </tbody>
             </table>`);
                     $("#op-Processing-Wait-Modal").modal('hide');
                 })

@@ -6,4 +6,4 @@ pm4py==1.2.10
 Django==3.1
 ppdp_anonops==0.1.1
 pp_cedp==0.0.3
-p_privacy_qt==0.0.9
+p_privacy_qt==0.0.10

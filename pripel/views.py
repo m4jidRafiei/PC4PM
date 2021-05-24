@@ -43,17 +43,12 @@ def pripel_main(request):
 
             privacy_aware_log_path = os.path.join(fixed_name + str(epsilon) + "_" + str(n) + "_" + str(k) + ".xes")
 
-
-
             settings.PRIPEL_FILE = os.path.join(privacy_aware_log_dir,privacy_aware_log_path)
             settings.PRIPEL_APPLIED = True
 
             pripel = PRIPEL()
-            result_file = pripel.apply(event_log_name,epsilon,n,k)
-            exportLog(result_file, settings.PRIPEL_FILE)
-
-
-
+            pripel.apply(event_log_name,epsilon,n,k,result_log_path=settings.PRIPEL_FILE)
+            # exportLog(result_file, settings.PRIPEL_FILE)
 
             print(settings.PRIPEL_FILE)
             if os.path.isfile(settings.PRIPEL_FILE):
@@ -129,7 +124,6 @@ def pripel_main(request):
     else:
 
         values = {}
-        values = {}
         values['epsilon'] = 0.1
         values['n'] = 5
         values['k'] = 10
@@ -185,8 +179,8 @@ def get_attributes(xes_log):
     sensitives.sort()
     return sensitives
 
-def exportLog(log, fullPath):
-    start_time = time.time()
-    xes_exporter.export_log(log, fullPath)
-    print("EXPORTING TOOK: --- %s seconds ---" % (time.time() - start_time))
-    return newName
+# def exportLog(log, fullPath):
+#     start_time = datetime.now()
+#     xes_exporter.export_log(log, fullPath)
+#     print("EXPORTING TOOK: --- %s seconds ---" % (datetime.now() - start_time))
+#     return newName

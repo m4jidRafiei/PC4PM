@@ -12,14 +12,13 @@ import json
 import time
 import traceback
 from django.core.files.storage import FileSystemStorage
-
 from pm4py.objects.log.importer.xes import factory as xes_importer
 from pm4py.objects.log.exporter.xes import factory as xes_exporter
 from p_privacy_qt.SMS import SMS
 from p_privacy_qt.EMD import EMD
-
-
 from pp_cedp.CEDP import CEDP
+
+import pdb
 
 def privacy_analysis_main(request):
     paSettings = settings.PRIVACY_ANALYSIS
@@ -114,6 +113,14 @@ def privacy_analysis_main(request):
                 if "setButton" in request.POST:
                     paSettings["EVENT_LOG_NAME_1"] = filename
                     returnObject['logEventAttributes'] = [a for a in eLog[0][0].keys()]
+                    #Sensitive attributes
+                    logCaseAttributes =[]
+                    for case_index, case in enumerate(eLog):
+                        for key in case.attributes.keys():
+                            if key not in logCaseAttributes:
+                                logCaseAttributes.append(key)
+                    returnObject['logCaseAttributes'] = logCaseAttributes
+
                     paSettings["EVENT_LOG_LIFECYCLES_1"] = getUniqueLifecycles(eLog)
 
                 elif "setButtonBackup" in request.POST:
@@ -161,7 +168,8 @@ def privacy_analysis_main(request):
                 print(getDisclosureRiskSettings(reqConfData))
 
                 cd, td, ad, uniq_matched_cases = getRiskValue(event_log, getDisclosureRiskSettings(reqConfData))
-                return HttpResponse(json.dumps({"Risk": {"cd": cd, "td": td, "ad":ad}}), content_type='application/json')
+
+                return HttpResponse(json.dumps({"Risk": {"cd": cd, "td": td, "ad":ad, 'um':len(uniq_matched_cases)}}), content_type='application/json')
 
             elif (request.GET['analysis'] == 'BCF'):
                 reqConfData = json.loads(getRequestParameter(request.GET, 'data', '{}'))
@@ -206,7 +214,7 @@ def getDataUtilityValue(origLogPath, privLogPath, settings):
 
 def getRiskValue(event_log, settings):
     print(settings)
-
+    print(event_log)
     existence_based = settings['DR_IsExistenceBased']  # it is faster when there is no super long traces in the event log
     measurement_type = settings['DR_MeasureType'].lower()  # average or worst_case
     sensitive = list(set(settings['DR_Sensitive']))
@@ -224,11 +232,9 @@ def getRiskValue(event_log, settings):
     bk_length = settings['DR_BKSizePower']  # int
 
     sms = SMS()
-
-    cd, td, ad, uniq_matched_cases = sms.calc(log, event_attributes, life_cycle, all_life_cycle, sensitive,
-                                              time_accuracy,
-                                              bk_type, measurement_type, bk_length, existence_based)
-
+    # pdb.set_trace()
+    cd, td, ad, uniq_matched_cases = sms.calc(log, event_attributes, life_cycle, all_life_cycle, sensitive, time_accuracy,
+                              bk_type, measurement_type, bk_length, existence_based)
     return  cd, td, ad, uniq_matched_cases
 
 def getBCFValue(log_name1, log_name2, settings):
@@ -266,6 +272,7 @@ def getDisclosureRiskSettings(requestData):
         'DR_TimeAccuracy': getRequestParameter(requestData, 'DR_TimeAccuracy', 'original'),
         'DR_LifeCycle': getRequestParameter(requestData, 'DR_LifeCycle', []),
         'DR_BKType': getRequestParameter(requestData, 'DR_BKType', 'set'),
+        'DR_Sensitive': getRequestParameter(requestData, 'DR_Sensitive', []),
         'DR_BKSizePower': int(getRequestParameter(requestData, 'DR_BKSizePower', 2))
     }
 
