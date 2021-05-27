@@ -21,7 +21,7 @@
     </li>
     <li class="nav-item">
         <a class="nav-link {{ bcfActive }}" id="bcf-tab" data-toggle="tab" href="#bcf" role="tab" aria-controls="bcf"
-            aria-selected="false">BCF-Anonymity</a>
+            aria-selected="false">FCB-Anonymity</a>
     </li>
 </ul>
 <div class="tab-content" id="myTabContent">
@@ -424,7 +424,7 @@
                     </div>
                 </div>
                 <div class="col-6">
-                    <h3 class="mt-4" style="color:#00529F;">BCF-Anonymity</h3>
+                    <h3 class="mt-4" style="color:#00529F;">FCB-Anonymity</h3>
                     <p>
                         Selected first log:
                         {% if log_name and log_name != ':notset:' %}
@@ -444,8 +444,8 @@
                     {% if log_name and log_name != ':notset:' %}
                     {% if log_name_backup and log_name != ':notset:' %}
                     <input style="margin-top: 10px;" data-toggle="tooltip" data-placement="top"
-                        title="Perform BCF-Anonymity Analysis" type="button" class="btn btn-primary"
-                        value="Perform BCF-Anonymity Analysis" name="bcfAnalysis" onclick="performBCFAnalysis();" />
+                        title="Perform FCB-Anonymity Analysis" type="button" class="btn btn-primary"
+                        value="Perform FCB-Anonymity Analysis" name="bcfAnalysis" onclick="performBCFAnalysis();" />
                     <br />
                     <br />
                     <span id="bcfResult"></span>
@@ -563,13 +563,13 @@
                         <td>Second event log k-anonymity</td><td>` + result.BCF.R2_KA + `</td>
                     </tr>
                     <tr>
-                        <td>B-anonymity</td><td>` + result.BCF.BA + `</td>
+                        <td>F-anonymity (k-anonymity of the first log after launching F-attack)</td><td>` + result.BCF.FA + `</td>
                     </tr>
                     <tr>
-                        <td>C-anonymity</td><td>` + result.BCF.CA + `</td>
+                        <td>C-anonymity (k-anonymity of the second log after launching C-attack)</td><td>` + result.BCF.CA + `</td>
                     </tr>
                     <tr>
-                        <td>F-anonymity</td><td>` + result.BCF.FA + `</td>
+                        <td>B-anonymity (k-anonymity of the second log after launching B-attack)</td><td>` + result.BCF.BA + `</td>
                     </tr>
                 </tbody>
             </table>`);
