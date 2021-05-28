@@ -5,6 +5,11 @@
 <link href="/static/plugins/bootstrap-select/css/bootstrap-select.min.css" rel="stylesheet" />
 
 <style>
+    .dropdown-menu {
+        max-height: none !important;
+        overflow-y: auto !important;
+    }
+
     * {
         margin: 0;
         padding: 0
@@ -260,7 +265,7 @@
     <h3 class="mt-4" style="color:#00529F;">Privacy/Confidentiality for Process Mining</h3>
     <br>
     <h4 style="color:#00549f;font-size:20px;">Use the left menu to apply state-of-the-art privacy preservation
-            techniques on your event data...</h4>
+        techniques on your event data...</h4>
 
 
 
@@ -291,7 +296,8 @@
                                                 <span class="input-group-text input-group-mediumWith"
                                                     id="basic-addon1">Operation:</span>
                                             </div>
-                                            <select class="selectpicker" title="Choose Operation..." id="WIZ_PMPS_Type" multiple>
+                                            <select class="selectpicker" title="Choose Operation..." id="WIZ_PMPS_Type"
+                                                multiple>
                                                 <option>Organizational</option>
                                                 <option>Control-Flow</option>
                                                 <option>Time</option>
@@ -310,9 +316,11 @@
 
                                         <div class="input-group mb-3">
                                             <div class="input-group-prepend">
-                                                <span class="input-group-text input-group-mediumWith" id="basic-addon1">Operation:</span>
+                                                <span class="input-group-text input-group-mediumWith"
+                                                    id="basic-addon1">Operation:</span>
                                             </div>
-                                            <select class="selectpicker" title="Choose Operation..." id="WIZ_PMAC_Type" multiple>
+                                            <select class="selectpicker" title="Choose Operation..." id="WIZ_PMAC_Type"
+                                                multiple>
                                                 <option>Joint-Activities social network discovery</option>
                                                 <option>Role Mining</option>
                                                 <option>Process discovery based on directly-follows graph</option>
@@ -323,7 +331,8 @@
                                         </div>
                                     </div>
 
-                                    <input type="button" name="previous" class="previous action-button-previous" value="Previous" />
+                                    <input type="button" name="previous" class="previous action-button-previous"
+                                        value="Previous" />
                                     <input type="button" name="next" class="next action-button" value="Next Step" />
                                 </fieldset>
                                 <fieldset>
@@ -332,32 +341,41 @@
 
                                         <div class="input-group mb-3">
                                             <div class="input-group-prepend">
-                                                <span class="input-group-text input-group-mediumWith" id="basic-addon1">Operation:</span>
+                                                <span class="input-group-text input-group-mediumWith"
+                                                    id="basic-addon1">Operation:</span>
                                             </div>
-                                        <select class="selectpicker" title="Choose Operation..." id="WIZ_PRPS_Type">
-                                            <option selected>Resource</option>
-                                            <option>Case</option>
-                                        </select>
+                                            <select class="selectpicker" title="Choose Operation..." id="WIZ_PRPS_Type" onchange="WIZ_PRPS_Type_Changed();">
+                                                <option selected>All</option>
+                                                <option>Resource</option>
+                                                <option>Case</option>
+                                            </select>
+                                            <div id="WIZ_PRPS_Type_ExplanationText"></div>
                                         </div>
                                     </div>
-                                    <input type="button" name="previous" class="previous action-button-previous" value="Previous" />
+                                    <input type="button" name="previous" class="previous action-button-previous"
+                                        value="Previous" />
                                     <input type="button" name="next" class="next action-button" value="Next Step" />
                                 </fieldset>
                                 <fieldset>
                                     <div class="form-card">
-                                        <h2 class="fs-title text-center">Privacy Activity</h2> <br><br>
+                                        <h2 class="fs-title">Privacy Activity</h2>
 
                                         <div class="input-group mb-3">
                                             <div class="input-group-prepend">
-                                                <span class="input-group-text input-group-mediumWith" id="basic-addon1">Operation:</span>
+                                                <span class="input-group-text input-group-mediumWith"
+                                                    id="basic-addon1">Operation:</span>
                                             </div>
-                                        <select class="selectpicker" title="Choose Operation..." id="WIZ_PRAC_Type">
-                                            <option selected>PPDP</option>
-                                            <option>PPPM</option>
-                                        </select>
+                                            <select class="selectpicker" title="Choose Operation..." id="WIZ_PRAC_Type">
+                                                <option selected>All</option>
+                                                <option value="PPDP">Privacy Preserving Data Publishing (PPDP)</option>
+                                                <option value="PPPM" disabled>Privacy Preserving Process Mining (PPPM)
+                                                </option>
+                                                <option value="PrAn">Privacy Analysis (PrAn)</option>
+                                            </select>
                                         </div>
                                     </div>
-                                    <input type="button" name="previous" class="previous action-button-previous" value="Previous" />
+                                    <input type="button" name="previous" class="previous action-button-previous"
+                                        value="Previous" />
                                     <input type="button" name="submit" class="next action-button" value="Confirm" />
                                 </fieldset>
                                 <fieldset>
@@ -367,7 +385,8 @@
                                         <h3>Here comes the Suggestion text</h3>
                                         <div id="WIZ_SuggestionText">Here comes the Suggestion text</div>
                                     </div>
-                                    <input type="button" name="previous" class="reset action-button-reset" value="Reset" />
+                                    <input type="button" name="previous" class="reset action-button-reset"
+                                        value="Reset" />
                                 </fieldset>
                             </form>
                         </div>
@@ -416,44 +435,46 @@
             },
             "PRAC": {
                 "PPDP": ["Privacy-Aware Role Mining", "Connector Method", "TLKC-Privacy", "TLKC-Privacy-Extended"],
-                "PPPM": ["Connector Method"]
+                "PPPM": ["Connector Method"],
+                "PrAn": ["PrivacyAnalysis"]
             }
         };
-        var appLinks = 
+        var appLinks =
         {
-            "Privacy-Aware Role Mining" : "#menuLink_PrivacyAwareRoleMining",
+            "Privacy-Aware Role Mining": "#menuLink_PrivacyAwareRoleMining",
             "Connector Method": "#menuLink_ConnectorMethod",
-            "TLKC-Privacy":"#menuLink_TLKCprivacy",
-            "TLKC-Privacy-Extended":"#menuLink_TLKCprivacyExtended",
-            "Anonymization Operations":"#menuLink_AnonymizationOperations",
-            "PrivacyAnalysis":"#menuLink_PrivacyAnalysis"
+            "TLKC-Privacy": "#menuLink_TLKCprivacy",
+            "TLKC-Privacy-Extended": "#menuLink_TLKCprivacyExtended",
+            "Anonymization Operations": "#menuLink_AnonymizationOperations",
+            "PrivacyAnalysis": "#menuLink_PrivacyAnalysis",
+            "PRIPEL": "#menuLink_PrivacyAnalysis_PRIPEL"
         };
-        var suggestionTexts = 
+        var suggestionTexts =
         {
-            "Privacy-Aware Role Mining" : "TEst1",
+            "Privacy-Aware Role Mining": "TEst1",
             "Connector Method": "Test <a href='/connector/connector_main'> Connector Method<a/>",
-            "TLKC-Privacy":"Test <a href='/tlkc_privacy/tlkc_main'>TLKC<a/>",
-            "TLKC-Privacy-Extended":"",
-            "Anonymization Operations":"",
-            "PrivacyAnalysis":""
+            "TLKC-Privacy": "Test <a href='/tlkc_privacy/tlkc_main'>TLKC<a/>",
+            "TLKC-Privacy-Extended": "",
+            "Anonymization Operations": "",
+            "PrivacyAnalysis": ""
         };
-        function makeSuggestion(){
+        function makeSuggestion() {
             var counter = {};
-            var count = (arr) => 
-            {
-                arr.forEach((j,k)=>
-                {
-                    if(!(j in counter)) counter[j] = 0;
+            var count = (arr) => {
+                if (arr === undefined) return;
+
+                arr.forEach((j, k) => {
+                    if (!(j in counter)) counter[j] = 0;
                     counter[j] += 1;
-                });  
+                });
             };
 
-            $("#WIZ_PMPS_Type option:selected").each((i, e) => {            
+            $("#WIZ_PMPS_Type option:selected").each((i, e) => {
                 count(data["PMPS"][$(e).val()]);
             });
-            $("#WIZ_PMAC_Type option:selected").each((i, e) => {            
+            $("#WIZ_PMAC_Type option:selected").each((i, e) => {
                 count(data["PMAC"][$(e).val()]);
-            });            
+            });
             count(data["PRPS"][$("#WIZ_PRPS_Type").val()]);
             count(data["PRAC"][$("#WIZ_PRAC_Type").val()]);
 
@@ -463,26 +484,35 @@
             // Sort the array based on the second element
             items.sort((first, second) => second[1] - first[1]);
 
-            // Create a new array with only the first 5 items
-            console.log(items.slice(0, 5));
-            items.slice(0, 2).forEach(x=> {
-                var item = x[0];
-                var link = appLinks[item];
-                $(link).css("box-shadow", "inset 0 0 10px -10px #3f3");
-                $(link).css("-webkit-box-shadow", "inset 0px 0px 10px 10px #3f3");
-                
-                //suggestionTexts
-                var text = suggestionTexts[item];
-                $("#WIZ_SuggestionText").append(text);
-            });
+            // Create a new array with only the first 2 items
+            var itemsSelect = items.slice(0, 2);
+            if (itemsSelect.length === 0) {
+                var links = Object.keys(appLinks).map((key) => appLinks[key]);
+                links.forEach(x => {
+                    $(x).css("box-shadow", "inset 0 0 10px -10px #3f3");
+                    $(x).css("-webkit-box-shadow", "inset 0px 0px 10px 10px #3f3");
+                });
+            }
+            else {
+                $("#WIZ_SuggestionText").append("Appropriate techniques for your request");
+                itemsSelect.forEach(x => {
+                    var item = x[0];
+                    var link = appLinks[item];
+                    $(link).css("box-shadow", "inset 0 0 10px -10px #3f3");
+                    $(link).css("-webkit-box-shadow", "inset 0px 0px 10px 10px #3f3");
 
+                    //suggestionTexts
+                    //$("#WIZ_SuggestionText").append(suggestionTexts[item]);
+                });
+                $("#WIZ_SuggestionText").append(" have been highlighted in the menu.");
+            }
             document.cookie = "anonOpsSuggestionSettings={'Test':0}";
         }
 
         var current_fs, next_fs, previous_fs; //fieldsets
         var opacity;
 
-        $(".next").click(function() {
+        $(".next").click(function () {
             current_fs = $(this).parent();
             next_fs = $(this).parent().next();
 
@@ -506,8 +536,8 @@
                 duration: 600
             });
 
-            if($(this).attr("name") === "submit") {
-                makeSuggestion();                
+            if ($(this).attr("name") === "submit") {
+                makeSuggestion();
             }
         });
 
@@ -548,7 +578,7 @@
 
             //show the previous fieldset
             first_fs.show();
-            
+
             //hide the current fieldset with style
             current_fs.animate({ opacity: 0 }, {
                 step: function (now) {
@@ -563,6 +593,26 @@
                 },
                 duration: 600
             });
+
+            $("#WIZ_SuggestionText").html("");
+
+            //Reset Selected Element & update drop down
+            $("#WIZ_PMPS_Type").selectpicker('deselectAll');
+            $("#WIZ_PMPS_Type").selectpicker('refresh');
+            $("#WIZ_PMAC_Type").selectpicker('deselectAll');
+            $("#WIZ_PMAC_Type").selectpicker('refresh');
+
+            $("#WIZ_PRPS_Type").val("All");
+            $("#WIZ_PRPS_Type").selectpicker('refresh');
+            $("#WIZ_PRAC_Type").val("All");
+            $("#WIZ_PRAC_Type").selectpicker('refresh');
+
+            //Reset link highlighting            
+            var links = Object.keys(appLinks).map((key) => appLinks[key]);
+            links.forEach(x => {
+                $(x).css("box-shadow", "");
+                $(x).css("-webkit-box-shadow", "");
+            });
         });
 
         $('.radio-group .radio').click(function () {
@@ -571,11 +621,23 @@
         });
 
         $(".submit").click(function () {
-            
+
             return false;
         })
 
     });
+    function WIZ_PRPS_Type_Changed() {
+        let val = $('#WIZ_PRPS_Type').val();
+        if (val === "Resource") {
+            $("#WIZ_PRPS_Type_ExplanationText").html("Resource attribute will be considered as an individual identifier!");
+        }
+        else if (val === "Case") {
+            $("#WIZ_PRPS_Type_ExplanationText").html("Case attribute will be considered as an individual identifier!");
+        }
+        else {
+            $("#WIZ_PRPS_Type_ExplanationText").html("");
+        }
+    }
 
 </script>
 {% endblock %}
