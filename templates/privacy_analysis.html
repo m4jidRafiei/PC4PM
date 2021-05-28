@@ -63,19 +63,25 @@
                                 </br>
                                 <table style="width: 100%;" class="table table-borderless">
                                     <tr>
-                                        <td>Existence Based:</td>
+                                        <td>Existence Based:
+                                            <span data-toggle="tooltip" title="Check when only traces existing in the event log should be considered for the disclosure-risk analysis">&#x1F6C8;</span>:</span>
+                                        </td>
                                         <td>
                                             <input type="checkbox" id="DR_IsExistenceBased" />
                                         </td>
                                     </tr>
                                     <tr>
-                                        <td>All Life-Cycles:</td>
+                                        <td>All Life-Cycles: 
+                                            <span data-toggle="tooltip" title="Select all life-cycles available in the event log (overwrites the selection in the 'Life-Cycle' field below)">&#x1F6C8;</span>:</span>
+                                        </td>
                                         <td>
                                             <input type="checkbox" id="DR_IsAllLifeCycle" />
                                         </td>
                                     </tr>
                                     <tr>
-                                        <td>Measure Type:</td>
+                                        <td>Measure Type:
+                                            <span data-toggle="tooltip" title="Select whether the analysis should use the average or the worst-case measure for the calculations">&#x1F6C8;</span>:</span>
+                                        </td>
                                         <td>
                                             <select class="selectpicker" id="DR_MeasureType">
                                                 <option selected>Average</option>
@@ -84,7 +90,9 @@
                                         </td>
                                     </tr>
                                     <tr>
-                                        <td>Event Attributes:</td>
+                                        <td>Event Attributes:
+                                            <span data-toggle="tooltip" title="Select the event attributes taken into account to create a simplified event log for the calculations">&#x1F6C8;</span>:</span>
+                                        </td>
                                         <td>
                                             <select class="selectpicker" id="DR_EventAttributes" multiple>
                                                 {% for attribute in logEventAttributes %}
@@ -94,7 +102,9 @@
                                         </td>
                                     </tr>
                                     <tr>
-                                        <td>Sensitive Attributes:</td>
+                                        <td>Sensitive Attributes:
+                                            <span data-toggle="tooltip" title="Select the sensitive attributes used for the disclosure risk calculation">&#x1F6C8;</span>:</span>
+                                        </td>
                                         <td>
                                             <select class="selectpicker" id="DR_Sensitive" multiple>
                                                 {% for ses_attribute in logCaseAttributes %}
@@ -116,7 +126,9 @@
                                         </td>
                                     </tr>
                                     <tr>
-                                        <td>Life-Cycle:</td>
+                                        <td>Life-Cycle:
+                                            <span data-toggle="tooltip" title="Select the relevant life-cycles for the analysis (If all are relevant check the 'All Life-Cycles' field above)">&#x1F6C8;</span>:</span>
+                                        </td>
                                         <td>
                                             <select class="selectpicker" id="DR_LifeCycle" multiple>
                                                 {% for cycle in logLifecycles %}
@@ -126,7 +138,9 @@
                                         </td>
                                     </tr>
                                     <tr>
-                                        <td>BK-Type:</td>
+                                        <td>BK-Type:
+                                            <span data-toggle="tooltip" title="Type of knowledge an adversary possibly gained about a process's activities">&#x1F6C8;</span>:</span>
+                                        </td>
                                         <td>
                                             <select class="selectpicker" id="DR_BKType">
                                                 <option selected>Set</option>
@@ -136,7 +150,9 @@
                                         </td>
                                     </tr>
                                     <tr>
-                                        <td>BK Size (power):</td>
+                                        <td>BK Size (power):
+                                            <span data-toggle="tooltip" title="Size of background knowledge (e.g. amount of activities / length of sequence)">&#x1F6C8;</span>:</span>
+                                        </td>
                                         <td>
                                             <input type="number" class="form-control" min="1" value="2"
                                                 id="DR_BKSizePower" />
@@ -213,13 +229,17 @@
                                 </br>
                                 <table style="width: 100%;" class="table table-borderless">
                                     <tr>
-                                        <td>All Life-Cycles:</td>
+                                        <td>All Life-Cycles:
+                                            <span data-toggle="tooltip" title="Select all life-cycles available in the event log (overwrites the selection in the 'Life-Cycle' field below)">&#x1F6C8;</span>:</span>
+                                        </td>
                                         <td>
                                             <input type="checkbox" id="DU_IsAllLifeCycle" />
                                         </td>
                                     </tr>
                                     <tr>
-                                        <td>Event Attributes:</td>
+                                        <td>Event Attributes:
+                                            <span data-toggle="tooltip" title="Select the event attributes taken into account to create a simplified event log for the calculations">&#x1F6C8;</span>:</span>
+                                        </td>
                                         <td>
                                             <select class="selectpicker" id="DU_EventAttributes" multiple>
                                                 {% for attribute in logEventAttributes %}
@@ -241,7 +261,9 @@
                                         </td>
                                     </tr>
                                     <tr>
-                                        <td>Life-Cycle:</td>
+                                        <td>Life-Cycle:
+                                            <span data-toggle="tooltip" title="Select the relevant life-cycles for the analysis (If all are relevant check the 'All Life-Cycles' field above)">&#x1F6C8;</span>:</span>
+                                        </td>
                                         <td>
                                             <select class="selectpicker" id="DU_LifeCycle" multiple>
                                                 <optgroup label="First Log">
@@ -339,13 +361,17 @@
                                 <table style="width: 100%;" class="table table-borderless">
 
                                     <tr>
-                                        <td>All Life-Cycles:</td>
+                                        <td>All Life-Cycles:
+                                            <span data-toggle="tooltip" title="Select all life-cycles available in the event log (overwrites the selection in the 'Life-Cycle' field below)">&#x1F6C8;</span>:</span>
+                                        </td>
                                         <td>
                                             <input type="checkbox" id="BCF_IsAllLifeCycle" />
                                         </td>
                                     </tr>
                                     <tr>
-                                        <td>Event Attributes:</td>
+                                        <td>Event Attributes:
+                                            <span data-toggle="tooltip" title="Select the event attributes taken into account to create a simplified event log for the calculations">&#x1F6C8;</span>:</span>
+                                        </td>
                                         <td>
                                             <select class="selectpicker" id="BCF_EventAttributes" multiple>
                                                 {% for attribute in logEventAttributes %}
@@ -355,7 +381,9 @@
                                         </td>
                                     </tr>
                                     <tr>
-                                        <td>Sensitive Attributes:</td>
+                                        <td>Sensitive Attributes:
+                                            <span data-toggle="tooltip" title="Select the sensitive attributes used for the disclosure risk calculation">&#x1F6C8;</span>:</span>
+                                        </td>
                                         <td>
                                             <select class="selectpicker" id="BCF_Sensitive" multiple>
                                                 {% for ses_attribute in logCaseAttributes %}
@@ -377,7 +405,9 @@
                                         </td>
                                     </tr>
                                     <tr>
-                                        <td>Life-Cycle:</td>
+                                        <td>Life-Cycle:
+                                            <span data-toggle="tooltip" title="Select the relevant life-cycles for the analysis (If all are relevant check the 'All Life-Cycles' field above)">&#x1F6C8;</span>:</span>
+                                        </td>
                                         <td>
                                             <select class="selectpicker" id="BCF_LifeCycle" multiple>
                                                 <optgroup label="First Log">
@@ -394,7 +424,9 @@
                                         </td>
                                     </tr>
                                     <tr>
-                                        <td>BK-Type:</td>
+                                        <td>BK-Type:
+                                            <span data-toggle="tooltip" title="Type of knowledge an adversary possibly gained about a process's activities">&#x1F6C8;</span>:</span>
+                                        </td>
                                         <td>
                                             <select class="selectpicker" id="BCF_BKType">
                                                 <!--                                            <option selected>Set</option>-->
@@ -404,14 +436,18 @@
                                         </td>
                                     </tr>
                                     <tr>
-                                        <td>BK Size (power):</td>
+                                        <td>BK Size (power):
+                                            <span data-toggle="tooltip" title="Size of background knowledge (e.g. amount of activities / length of sequence)">&#x1F6C8;</span>:</span>
+                                        </td>
                                         <td>
                                             <input type="number" class="form-control" min="1" value="1"
                                                 id="BCF_BKSizePower" />
                                         </td>
                                     </tr>
                                     <tr>
-                                        <td>Anonymization Parameter (n):</td>
+                                        <td>Anonymization Parameter (n):
+                                            <span data-toggle="tooltip" title="Anonymization Parameter">&#x1F6C8;</span>:</span>
+                                        </td>
                                         <td>
                                             <input type="number" class="form-control" min="1" max="5" value="1"
                                                 id="BCF_AnonParam" />

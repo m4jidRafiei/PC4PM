@@ -381,12 +381,9 @@
                                 <fieldset>
                                     <div class="form-card">
                                         <h2 class="fs-title text-center">Suggestion</h2> <br><br>
-
-                                        <h3>Here comes the Suggestion text</h3>
-                                        <div id="WIZ_SuggestionText">Here comes the Suggestion text</div>
+                                        <h3 id="WIZ_SuggestionText"></h3>
                                     </div>
-                                    <input type="button" name="previous" class="reset action-button-reset"
-                                        value="Reset" />
+                                    <input type="button" name="previous" class="reset action-button-reset" value="Reset" />
                                 </fieldset>
                             </form>
                         </div>
@@ -430,13 +427,19 @@
                 "Organizational Mining": ["TLKC-Privacy-Extended"]
             },
             "PRPS": {
-                "Resource": ["Privacy-Aware Role Mining"],
-                "Case": ["Connector Method", "TLKC-Privacy", "TLKC-Privacy-Extended"]
+                "All": ["Anonymization Operations", "Privacy-Aware Role Mining", "Connector Method", "TLKC-Privacy", "TLKC-Privacy-Extended"],
+                "Resource": ["Privacy-Aware Role Mining", "Anonymization Operations"],
+                "Case": ["Connector Method", "TLKC-Privacy", "TLKC-Privacy-Extended", "Anonymization Operations"]
             },
             "PRAC": {
                 "PPDP": ["Privacy-Aware Role Mining", "Connector Method", "TLKC-Privacy", "TLKC-Privacy-Extended"],
                 "PPPM": ["Connector Method"],
                 "PrAn": ["PrivacyAnalysis"]
+            }
+        };
+        var exclusions = {
+            "PRAC": {
+                "PrAn": ["Anonymization Operations"]
             }
         };
         var appLinks =
@@ -468,6 +471,15 @@
                     counter[j] += 1;
                 });
             };
+            var handleExclusions = (field, value) => {
+                if (field === undefined || value === undefined || !(field in exclusions) || !(value in exclusions[field])) return;
+
+                exclusions[field][value].forEach((j, k) => {
+                    if (j in counter){
+                        delete counter[j];
+                    } 
+                });
+            };
 
             $("#WIZ_PMPS_Type option:selected").each((i, e) => {
                 count(data["PMPS"][$(e).val()]);
@@ -477,6 +489,12 @@
             });
             count(data["PRPS"][$("#WIZ_PRPS_Type").val()]);
             count(data["PRAC"][$("#WIZ_PRAC_Type").val()]);
+            
+            //Remove selected techniques if a setting is chosen which has conflicts with a technique
+            $("#WIZ_PMPS_Type option:selected").each((i, e) => handleExclusions("PMPS", $(e).val()));
+            $("#WIZ_PMAC_Type option:selected").each((i, e) => handleExclusions("PMAC", $(e).val()));
+            handleExclusions("PRPS", $("#WIZ_PRPS_Type").val());
+            handleExclusions("PRAC", $("#WIZ_PRAC_Type").val());
 
             // Create items array
             var items = Object.keys(counter).map((key) => [key, counter[key]]);
@@ -485,7 +503,7 @@
             items.sort((first, second) => second[1] - first[1]);
 
             // Create a new array with only the first 2 items
-            var itemsSelect = items.slice(0, 2);
+            var itemsSelect = items;//.slice(0, 2);
             if (itemsSelect.length === 0) {
                 var links = Object.keys(appLinks).map((key) => appLinks[key]);
                 links.forEach(x => {

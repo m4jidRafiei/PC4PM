@@ -25,23 +25,32 @@
 
 
                 <div class="form-group row">
-                    <label for="epsilon" class="col-sm-5 col-form-label">Epsilon (&#1013;)</label>
+                    <label for="epsilon" class="col-sm-5 col-form-label">Epsilon (&#1013;)
+                        <span data-toggle="tooltip"
+                            title="The strength of the differential privacy guarantee">&#x1F6C8;</span>:</span>
+                    </label>
                     <div class="col-sm-3">
-                        <input type="number" class="form-control" id="epsilon" name="epsilon" placeholder="Epsilon Value" value="{{values.epsilon}}">
+                        <input type="number" class="form-control" id="epsilon" name="epsilon"
+                            placeholder="Epsilon Value" value="{{values.epsilon}}">
                     </div>
                 </div>
 
                 <div class="form-group row">
-                    <label for="k" class="col-sm-5 col-form-label">Trace-Variant-Query Prunning Parameter (k)</label>
+                    <label for="k" class="col-sm-5 col-form-label">Trace-Variant-Query Prunning Parameter (k)
+                        <span data-toggle="tooltip" title="The maximal prefix length of considered traces for the trace-variant-query">&#x1F6C8;</span>:</span></label>
                     <div class="col-sm-3">
-                        <input type="number" class="form-control" id="k" name="k" placeholder="k Value" value="{{values.k}}">
+                        <input type="number" class="form-control" id="k" name="k" placeholder="k Value"
+                            value="{{values.k}}">
                     </div>
                 </div>
 
                 <div class="form-group row">
-                    <label for="n" class="col-sm-5 col-form-label">Trace-Variant-Query max. Prefix (n)</label>
+                    <label for="n" class="col-sm-5 col-form-label">Trace-Variant-Query max. Prefix (n)
+                        <span data-toggle="tooltip"
+                            title="Prunning parameter of the trace-variant-query. At least k traces must appear in a noisy variant count to be part of the result of the query">&#x1F6C8;</span>:</span></label>
                     <div class="col-sm-3">
-                        <input type="number" class="form-control" id="n" name="n" placeholder="Confidence Value" value="{{values.n}}">
+                        <input type="number" class="form-control" id="n" name="n" placeholder="Confidence Value"
+                            value="{{values.n}}">
                     </div>
                 </div>
 
@@ -116,12 +125,13 @@
 
 <script>
 
-    function sleep(ms) {
-        return new Promise(resolve => setTimeout(resolve, ms));
-    }
     $(document).ready(function () {
         $('[data-toggle="tooltip"]').tooltip();
     });
+
+    function sleep(ms) {
+        return new Promise(resolve => setTimeout(resolve, ms));
+    }
 
     $("#applyButton").click(function () {
         var logname = "{{log_name}}";
@@ -130,16 +140,6 @@
         }
         $(".spinner-grow").show();
     });
-
-
-   < !--function LoadELResult() {
-        -->
-    < !--document.getElementById('ELResult').style.display = "block"; -->
-    < !--}-->
-   < !--function LoadELResultimg() {
-            -->
-    < !--document.getElementById('ELResultimg').style.display = "block"; -->
-    < !--}-->
 </script>
 
 {% endblock %}

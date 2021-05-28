@@ -24,7 +24,9 @@
 
 
              <div class="form-group row">
-                    <label for="bk_type" class="col-md-5 col-form-label">Background Knowledge Type</label>
+                    <label for="bk_type" class="col-md-5 col-form-label">Background Knowledge Type
+                      <span data-toggle="tooltip" title="Type of knowledge an adversary possibly gained about a process's activities">&#x1F6C8;</span>:</span>
+                    </label>
                     <div class="col-sm-3">
                        <select class="form-control" name="bk_type" id="bk_type">
                            <option>set</option>
@@ -36,7 +38,7 @@
             </div>
 
             <div class="form-group row">
-                    <label for="bk_type" class="col-md-5 col-form-label">Background Knowledge Attribute</label>
+                    <label for="bk_type" class="col-md-5 col-form-label">Background Knowledge Attribute                    </label>
                     <div class="col-sm-3">
                        <select class="form-control" name="bk_att" id="bk_att">
                            <option>Activity</option>
@@ -65,7 +67,9 @@
 
 
             <div class="form-group row">
-                    <label for="bk_power" class="col-sm-5 col-form-label">Background Knowledge Power (L)</label>
+                    <label for="bk_power" class="col-sm-5 col-form-label">Background Knowledge Power (L)
+                      <span data-toggle="tooltip" title="Size of background knowledge (e.g. amount of activities / length of sequence)">&#x1F6C8;</span>:</span>                      
+                    </label>
                     <div class="col-sm-3">
                       <input type="text" class="form-control" id="bk_power" name="bk_power" placeholder="BK Power Value" value="{{values.bk_power}}">
                     </div>
@@ -74,28 +78,36 @@
 
 
             <div class="form-group row">
-                    <label for="k_anonymity" class="col-sm-5 col-form-label">Anonymity Group Size (K)</label>
+                    <label for="k_anonymity" class="col-sm-5 col-form-label">Anonymity Group Size (K)
+                      <span data-toggle="tooltip" title="Parameter setting for the k-Anonymity used in the TLKC-Model">&#x1F6C8;</span>:</span>
+                    </label>
                     <div class="col-sm-3">
                       <input type="text" class="form-control" id="k_anonymity" name="k_anonymity" placeholder="K Value" value="{{values.k_anonymity}}">
                     </div>
             </div>
 
             <div class="form-group row">
-                    <label for="confidence_bound" class="col-sm-5 col-form-label">Confidence Bounding (C)</label>
+                    <label for="confidence_bound" class="col-sm-5 col-form-label">Confidence Bounding (C)
+                      <span data-toggle="tooltip" title="Percentual threshold setting for the confidence of a sensitive attribute value in the K sized groups">&#x1F6C8;</span>:</span>
+                    </label>
                     <div class="col-sm-3">
                       <input type="text" class="form-control" id="confidence_bound" name="confidence_bound" placeholder="Confidence Value" value="{{values.confidence_bound}}">
                     </div>
             </div>
 
             <div class="form-group row">
-                    <label for="alpha" class="col-sm-5 col-form-label">Privacy Gain Coefficient (&alpha;)</label>
+                    <label for="alpha" class="col-sm-5 col-form-label">Privacy Gain Coefficient (&alpha;)
+                      <span data-toggle="tooltip" title="Weight factor in trade-off relation with the Utility Loss Coefficient (&beta;) - Sum has to be 1">&#x1F6C8;</span>:</span>
+                    </label>
                     <div class="col-sm-3">
                       <input type="text" class="form-control" id="alpha" name="alpha" placeholder="Privacy Gain Coefficient" value="{{values.alpha}}">
                     </div>
             </div>
 
             <div class="form-group row">
-                    <label for="beta" class="col-sm-5 col-form-label">Utility Loss Coefficient (&beta;)</label>
+                    <label for="beta" class="col-sm-5 col-form-label">Utility Loss Coefficient (&beta;)
+                      <span data-toggle="tooltip" title="Weight factor in trade-off relation with the Privacy Gain Coefficient (&alpha;) - Sum has to be 1">&#x1F6C8;</span>:</span>
+                    </label>
                     <div class="col-sm-3">
                       <input type="text" class="form-control" id="beta" name="beta" placeholder="Utility Loss Coefficient" value="{{values.beta}}">
                     </div>
