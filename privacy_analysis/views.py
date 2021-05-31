@@ -21,6 +21,7 @@ from p_privacy_qt.EMD import EMD
 
 from pp_cedp.CEDP import CEDP
 
+
 def privacy_analysis_main(request):
     paSettings = settings.PRIVACY_ANALYSIS
 

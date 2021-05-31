@@ -323,10 +323,12 @@
                                                 multiple>
                                                 <option>Joint-Activities social network discovery</option>
                                                 <option>Role Mining</option>
-                                                <option>Process discovery based on directly-follows graph</option>
+                                                <option>Process discovery based on DFG</option>
                                                 <option>Process discovery</option>
                                                 <option>Performance Analysis</option>
                                                 <option>Organizational Mining</option>
+                                                <option>DFG Discovery</option>
+                                                <option>Social Network Discovery</option>
                                             </select>
                                         </div>
                                     </div>
@@ -413,28 +415,31 @@
     $(document).ready(function () {
         var data = {
             "PMPS": {
-                "Organizational": ["Privacy-Aware Role Mining", "TLKC-Privacy-Extended"],
-                "Control-Flow": ["Connector Method", "TLKC-Privacy", "TLKC-Privacy-Extended"],
-                "Time": ["TLKC-Privacy", "TLKC-Privacy-Extended"],
-                "Case": ["TLKC-Privacy", "TLKC-Privacy-Extended"]
+                "Organizational": ["Privacy-Aware Role Mining", "TLKC-Privacy-Extended", "Anonymization Operations", "PRIPEL"],
+                "Control-Flow": ["Connector Method", "TLKC-Privacy", "TLKC-Privacy-Extended", "Anonymization Operations", "PRIPEL"],
+                "Time": ["TLKC-Privacy", "TLKC-Privacy-Extended", "Anonymization Operations", "PRIPEL"],
+                "Case": ["TLKC-Privacy", "TLKC-Privacy-Extended", "Anonymization Operations", "PRIPEL"]
             },
             "PMAC": {
-                "Joint-Activities social network discovery": ["Privacy-Aware Role Mining"],
-                "Role Mining": ["Privacy-Aware Role Mining"],
-                "Process discovery based on directly-follows graph": ["Connector Method"],
-                "Process discovery": ["TLKC-Privacy", "TLKC-Privacy-Extended"],
-                "Performance Analysis": ["TLKC-Privacy", "TLKC-Privacy-Extended"],
-                "Organizational Mining": ["TLKC-Privacy-Extended"]
+                "Joint-Activities social network discovery": ["Privacy-Aware Role Mining", "Anonymization Operations"],
+                "Role Mining": ["Privacy-Aware Role Mining", "Anonymization Operations"],
+                "Process discovery based on DFG": ["Connector Method", "Anonymization Operations", "PRIPEL"],
+                "Process discovery": ["TLKC-Privacy", "TLKC-Privacy-Extended", "Anonymization Operations", "PRIPEL"],
+                "Performance Analysis": ["TLKC-Privacy", "TLKC-Privacy-Extended", "Anonymization Operations", "PRIPEL"],
+                "Organizational Mining": ["TLKC-Privacy-Extended", "Anonymization Operations", "PRIPEL"],
+                "DFG Discovery": ["Connector Method","TLKC-Privacy","TLKC-Privacy-Extended", "Anonymization Operations", "PRIPEL"],
+                "Social Network Discovery" : ["Privacy-Aware Role Mining"]
             },
             "PRPS": {
-                "All": ["Anonymization Operations", "Privacy-Aware Role Mining", "Connector Method", "TLKC-Privacy", "TLKC-Privacy-Extended"],
+                "All": ["Anonymization Operations", "Privacy-Aware Role Mining", "Connector Method", "TLKC-Privacy", "TLKC-Privacy-Extended", "PRIPEL"],
                 "Resource": ["Privacy-Aware Role Mining", "Anonymization Operations"],
-                "Case": ["Connector Method", "TLKC-Privacy", "TLKC-Privacy-Extended", "Anonymization Operations"]
+                "Case": ["Connector Method", "TLKC-Privacy", "TLKC-Privacy-Extended", "Anonymization Operations", "PRIPEL"]
             },
             "PRAC": {
-                "PPDP": ["Privacy-Aware Role Mining", "Connector Method", "TLKC-Privacy", "TLKC-Privacy-Extended"],
-                "PPPM": ["Connector Method"],
-                "PrAn": ["PrivacyAnalysis"]
+                "All": ["Anonymization Operations", "Privacy-Aware Role Mining", "Connector Method", "TLKC-Privacy", "TLKC-Privacy-Extended", "PRIPEL"],
+                "PPDP": ["Privacy-Aware Role Mining", "Connector Method", "TLKC-Privacy", "TLKC-Privacy-Extended", "Anonymization Operations", "PRIPEL"],
+                "PPPM": ["Connector Method", "Anonymization Operations"],
+                "PrAn": ["PrivacyAnalysis", "Anonymization Operations"]
             }
         };
         var exclusions = {
@@ -454,9 +459,9 @@
         };
         var suggestionTexts =
         {
-            "Privacy-Aware Role Mining": "TEst1",
-            "Connector Method": "Test <a href='/connector/connector_main'> Connector Method<a/>",
-            "TLKC-Privacy": "Test <a href='/tlkc_privacy/tlkc_main'>TLKC<a/>",
+            "Privacy-Aware Role Mining": "",
+            "Connector Method": "",
+            "TLKC-Privacy": "",
             "TLKC-Privacy-Extended": "",
             "Anonymization Operations": "",
             "PrivacyAnalysis": ""
@@ -503,13 +508,17 @@
             items.sort((first, second) => second[1] - first[1]);
 
             // Create a new array with only the first 2 items
-            var itemsSelect = items;//.slice(0, 2);
-            if (itemsSelect.length === 0) {
+            //var itemsSelect = items.slice(0, 2);
+            
+            // Create a new array with only the items that have at least 4 hits
+            var itemsSelect = items.filter(x => x[1] >= 4);
+            if ($("#WIZ_PMPS_Type option:selected").length === 0 && $("#WIZ_PMAC_Type option:selected").length === 0 && $("#WIZ_PRPS_Type").val() === "All" && $("#WIZ_PRAC_Type").val() === "All") {
                 var links = Object.keys(appLinks).map((key) => appLinks[key]);
                 links.forEach(x => {
                     $(x).css("box-shadow", "inset 0 0 10px -10px #3f3");
                     $(x).css("-webkit-box-shadow", "inset 0px 0px 10px 10px #3f3");
                 });
+                $("#WIZ_SuggestionText").append("As no selection was made, all techniques have been highlighted in the menu.");
             }
             else {
                 $("#WIZ_SuggestionText").append("Appropriate techniques for your request");
