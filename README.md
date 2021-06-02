@@ -14,7 +14,10 @@ At the moment, the tool has eight main Django applications:
   The extended version of TLKC-privacy covers all the main perspectives of process mining including control-flow, time, case, and organizational perspectives. It empowers the adjustability of the proposed technique by adding new parameters to adjust privacy guarantees and the loss of accuracy. 
 * [Anonymization operations](https://github.com/m4jidRafiei/PPDP-AnonOps)
   - This application implements the main anonymization operations listed in the paper [Privacy-Preserving Data Publishing in Process Mining](https://www.researchgate.net/publication/342048551_Privacy-Preserving_Data_Publishing_in_Process_Mining).
-  The implemented anonymization operations are suppression, addition, condensation, swapping, generalization, cryptography, and substitution.  
+  The implemented anonymization operations are suppression, addition, condensation, swapping, generalization, cryptography, and substitution.
+* [PRIPEL](https://github.com/samadeusfp/PRIPEL) 
+  - This application implements the notion of differential privacy to provide privacy guarantees for event logs.
+  PRIPEL is an external library for our tool. It has been integrated as an example external library to show this feature of the tool.
 * [Privacy analysis](https://github.com/m4jidRafiei/privacy_quantification) and [FCB-anonymity](https://github.com/m4jidRafiei/PP_CEDP) 
   - This application implements the techniques for analyzing privacy of event logs proposed in [Towards Quantifying Privacy in Process Mining](https://www.researchgate.net/publication/344452810_Towards_Quantifying_Privacy_in_Process_Mining). It quantifies disclosure risks and the data utility.
   It also implements the FCB-anonymity proposed in [Privacy-Preserving Continuous Event Data Publishing](https://www.researchgate.net/publication/351848863_Privacy-Preserving_Continuous_Event_Data_Publishing).
