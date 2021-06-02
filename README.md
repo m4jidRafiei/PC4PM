@@ -16,7 +16,7 @@ At the moment, the tool has eight main Django applications:
   - This application implements the main anonymization operations listed in the paper [Privacy-Preserving Data Publishing in Process Mining](https://www.researchgate.net/publication/342048551_Privacy-Preserving_Data_Publishing_in_Process_Mining).
   The implemented anonymization operations are suppression, addition, condensation, swapping, generalization, cryptography, and substitution.
 * [PRIPEL](https://github.com/samadeusfp/PRIPEL) 
-  - This application implements the notion of differential privacy to provide privacy guarantees for event logs.
+  - This application implements the notion of differential privacy to provide privacy guarantees for event logs, proposed in the paper [PRIPEL: Privacy-Preserving Event Log Publishing Including Contextual Information](https://www.researchgate.net/publication/342313273_PRIPEL_Privacy-Preserving_Event_Log_Publishing_Including_Contextual_Information).
   PRIPEL is an external library for our tool. It has been integrated as an example external library to show this feature of the tool.
 * [Privacy analysis](https://github.com/m4jidRafiei/privacy_quantification) and [FCB-anonymity](https://github.com/m4jidRafiei/PP_CEDP) 
   - This application implements the techniques for analyzing privacy of event logs proposed in [Towards Quantifying Privacy in Process Mining](https://www.researchgate.net/publication/344452810_Towards_Quantifying_Privacy_in_Process_Mining). It quantifies disclosure risks and the data utility.
