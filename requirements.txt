@@ -1,9 +1,10 @@
-p_tlkc_privacy_ext==0.1.1
-p_tlkc_privacy==0.0.14
-p_connector_dfg==0.0.14
 pp_role_mining==0.0.10
+p_connector_dfg==0.0.14
 pm4py==1.2.10
+p_tlkc_privacy==0.0.14
 Django==3.1
-ppdp_anonops==0.1.1
 pp_cedp==0.0.4
+pp_pripel==0.0.4
+p_tlkc_privacy_ext==0.1.1
 p_privacy_qt==0.0.10
+ppdp_anonops==0.1.1
