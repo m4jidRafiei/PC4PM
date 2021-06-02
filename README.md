@@ -39,8 +39,8 @@ The application is OS-independent, and you only need to install Django and Pytho
 To simplify the usage, and to run the appication without going throgh the installation phase, a [Docker container](https://hub.docker.com/r/m4jid/ppdp-pm) has been provide that can be run on your local system using the following docker commands:
 
 ```shell
-docker pull m4jid/ppdp-pm-v2
-docker run -d -p 8000:8000 m4jid/ppdp-pm-v2
+docker pull m4jid/pc4pm
+docker run -d -p 8000:8000 m4jid/pc4pm
 ``` 
 Note that for using docker commands, first you need to [install Docker](https://docs.docker.com/get-docker/) accourding to your operation system.
 
@@ -49,7 +49,7 @@ After running the docker, use your browser and enter the following address to ru
 
 ## Other Integrations 
 ##### Currently, only for the first version of PPDP-PM
-The introduced privacy preservation techniques have also been integrated into [PM4Py-WS (PMTK)](https://github.com/m4jidRafiei/pm4py-ws/tree/privacyIntegration) as an open-source web-based
+Some of the introduced privacy preservation techniques have also been integrated into [PM4Py-WS (PMTK)](https://github.com/m4jidRafiei/pm4py-ws/tree/privacyIntegration) as an open-source web-based
 application for process mining. Where process mining algorithms can directly be applied to the privacy-aware event logs. Use the following docker commands to run this application:
 
 ```shell
