@@ -162,7 +162,7 @@ def privacy_analysis_main(request):
                 print(getDisclosureRiskSettings(reqConfData))
 
                 cd, td, ad, uniq_matched_cases = getRiskValue(event_log, getDisclosureRiskSettings(reqConfData))
-                return HttpResponse(json.dumps({"Risk": {"cd": cd, "td": td, "ad":ad}}), content_type='application/json')
+                return HttpResponse(json.dumps({"Risk": {"cd": cd, "td": td, "ad":ad, "um":len(uniq_matched_cases)}}), content_type='application/json')
 
             elif (request.GET['analysis'] == 'BCF'):
                 reqConfData = json.loads(getRequestParameter(request.GET, 'data', '{}'))
@@ -266,6 +266,7 @@ def getDisclosureRiskSettings(requestData):
         'DR_EventAttributes': getRequestParameter(requestData, 'DR_EventAttributes', []),
         'DR_TimeAccuracy': getRequestParameter(requestData, 'DR_TimeAccuracy', 'original'),
         'DR_LifeCycle': getRequestParameter(requestData, 'DR_LifeCycle', []),
+        'DR_Sensitive': getRequestParameter(requestData, 'DR_Sensitive', []),
         'DR_BKType': getRequestParameter(requestData, 'DR_BKType', 'set'),
         'DR_BKSizePower': int(getRequestParameter(requestData, 'DR_BKSizePower', 2))
     }
