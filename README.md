@@ -15,7 +15,7 @@ At the moment, the tool has eight main Django applications:
 * [Anonymization operations](https://github.com/m4jidRafiei/PPDP-AnonOps)
   - This application implements the main anonymization operations listed in the paper [Privacy-Preserving Data Publishing in Process Mining](https://www.researchgate.net/publication/342048551_Privacy-Preserving_Data_Publishing_in_Process_Mining).
   The implemented anonymization operations are suppression, addition, condensation, swapping, generalization, cryptography, and substitution.
-* [PRIPEL](https://github.com/samadeusfp/PRIPEL) 
+* [PRIPEL](https://github.com/samadeusfp/PRIPEL) (external)
   - This application implements the notion of differential privacy to provide privacy guarantees for event logs, proposed in the paper [PRIPEL: Privacy-Preserving Event Log Publishing Including Contextual Information](https://www.researchgate.net/publication/342313273_PRIPEL_Privacy-Preserving_Event_Log_Publishing_Including_Contextual_Information).
   PRIPEL is an external library for our tool. It has been integrated as an example external library to show this feature of the tool.
 * [Privacy analysis](https://github.com/m4jidRafiei/privacy_quantification) and [FCB-anonymity](https://github.com/m4jidRafiei/PP_CEDP) 
@@ -37,6 +37,9 @@ At the moment, the tool has eight main Django applications:
 
 ### Screencast
 In [this](https://github.com/m4jidRafiei/PC4PM/blob/main/PC4PM_Screencast.mp4) video, you can watch a screencast of the tool which demonstrates the main functionalities of PC4PM. Note that you may need to download the file to watch.
+
+### User Manual
+In [this](https://github.com/m4jidRafiei/PC4PM/blob/main/PC4PM_Manual.pdf) document, you can find the detailed user manual of PC4PM.
 
 ### Requirements
 The application is OS-independent, and you only need to install Django and Python packages specified in the [requirements](https://github.com/m4jidRafiei/PPDP-PM/blob/master/requirements.txt) file.
