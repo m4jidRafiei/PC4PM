@@ -35,6 +35,9 @@ At the moment, the tool has eight main Django applications:
 * To keep the process analysts aware of the modifications applied to the privacy-aware event logs, the _privacy metadata_ specify the order of the applied privacy preservation techniques. 
 * A naming approach is followed to uniquely identify the privacy-aware event data based on the name of the technique, the creation time, and the name of the event log.    
 
+### Screencast
+In [this](https://github.com/m4jidRafiei/PC4PM/blob/main/PC4PM_Screencast.mp4) video, you can watch a screencast of the tool which demonstrates the main functionalities of PC4PM. Note that you may need to download the file to watch.
+
 ### Requirements
 The application is OS-independent, and you only need to install Django and Python packages specified in the [requirements](https://github.com/m4jidRafiei/PPDP-PM/blob/master/requirements.txt) file.
 
